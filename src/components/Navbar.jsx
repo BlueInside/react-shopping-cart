@@ -5,9 +5,12 @@ function Navbar({ links }) {
     <>
       <nav>
         <ol>
-          {links.map((link) => (
-            <li key={link.id}>{link.label}</li>
-          ))}
+          {Array.isArray(links) &&
+            links.map((link) => (
+              <li key={link.id}>
+                <a href={link.path}>{link.label}</a>
+              </li>
+            ))}
         </ol>
       </nav>
     </>
@@ -15,7 +18,13 @@ function Navbar({ links }) {
 }
 
 Navbar.propTypes = {
-  links: PropTypes.array.isRequired,
+  links: PropTypes.arrayOf(
+    PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      label: PropTypes.string.isRequired,
+      path: PropTypes.string.isRequired,
+    })
+  ),
 };
 
 Navbar.defaultProps = {
