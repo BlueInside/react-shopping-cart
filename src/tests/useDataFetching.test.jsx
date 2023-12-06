@@ -3,7 +3,7 @@ import { renderHook, waitFor } from '@testing-library/react';
 import useDataFetching from '../hooks/useDataFetching';
 
 describe('useDataFetching', () => {
-  it('returns data when correct url provided', async () => {
+  it('returns data when fetch is successful', async () => {
     globalThis.fetch = vi.fn(() =>
       Promise.resolve({
         ok: true,
@@ -18,7 +18,17 @@ describe('useDataFetching', () => {
     await waitFor(() => {
       expect(result.current.data).toEqual({ data: 'mockData' });
     });
+  });
 
-    console.log(result.current);
+  it('return error when fetch fails', async () => {
+    globalThis.fetch = vi.fn(() =>
+      Promise.reject(new Error('Failed to fetch data'))
+    );
+
+    const { result } = renderHook(useDataFetching);
+    expect(result.current.error).toBeNull();
+    await waitFor(() => {
+      expect(result.current.error).toEqual(new Error('Failed to fetch data'));
+    });
   });
 });
