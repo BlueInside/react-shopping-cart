@@ -1,0 +1,9 @@
+directory_structure.txt
+index.html
+node_modules
+package.json
+package-lock.json
+public
+README.md
+src
+vite.config.js
