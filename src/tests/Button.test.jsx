@@ -43,4 +43,18 @@ describe('Button component', () => {
 
     consoleMock.mockReset();
   });
+
+  it('should be focused and interact on enter keypress', async () => {
+    const user = userEvent.setup();
+    const handleClick = vi.fn();
+
+    render(<Button handleClick={handleClick} />);
+    const button = screen.getByRole('button');
+
+    button.focus();
+    expect(button).toHaveFocus();
+
+    await user.keyboard('{Enter}');
+    expect(handleClick).toHaveBeenCalled();
+  });
 });
