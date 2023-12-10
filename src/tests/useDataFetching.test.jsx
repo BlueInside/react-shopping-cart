@@ -3,9 +3,14 @@ import { renderHook, waitFor } from '@testing-library/react';
 import useDataFetching from '../hooks/useDataFetching';
 
 describe('useDataFetching', () => {
+  const numberOfItems = 5;
+  const url = `https://fakestoreapi.com/products${
+    numberOfItems && '?limit=' + numberOfItems
+  }`;
+
   it('initializes with correct initial state', () => {
     // Render useDataFetch
-    const { result } = renderHook(useDataFetching);
+    const { result } = renderHook(() => useDataFetching(url));
 
     expect(result.current.data).toBeNull();
     expect(result.current.error).toBeNull();
@@ -22,7 +27,7 @@ describe('useDataFetching', () => {
       })
     );
 
-    const { result, rerender } = renderHook(useDataFetching);
+    const { result, rerender } = renderHook(() => useDataFetching(url));
 
     //Wait for data to load
     await waitFor(() => {
@@ -43,7 +48,7 @@ describe('useDataFetching', () => {
       Promise.reject(new Error('Failed to fetch data'))
     );
 
-    const { result } = renderHook(useDataFetching);
+    const { result } = renderHook(() => useDataFetching(url));
     expect(result.current.error).toBeNull();
 
     // Wait for data to load
@@ -63,7 +68,7 @@ describe('useDataFetching', () => {
       })
     );
 
-    const { result } = renderHook(useDataFetching);
+    const { result } = renderHook(() => useDataFetching(url));
     expect(result.current.data).toBeNull();
     expect(result.current.error).toBeNull();
     expect(result.current.loading).toBeTruthy();
@@ -81,7 +86,7 @@ describe('useDataFetching', () => {
       Promise.reject(new Error('Failed to fetch data'))
     );
 
-    const { result } = renderHook(useDataFetching);
+    const { result } = renderHook(() => useDataFetching(url));
     expect(result.current.data).toBeNull();
     expect(result.current.error).toBeNull();
     expect(result.current.loading).toBeTruthy();
