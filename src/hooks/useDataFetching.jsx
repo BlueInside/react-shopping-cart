@@ -1,12 +1,17 @@
 import { useEffect, useState } from 'react';
 
-function useDataFetching() {
+function useDataFetching(numberOfItems) {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const url = `https://fakestoreapi.com/products${
+    numberOfItems && '?limit=' + numberOfItems
+  }`;
 
   useEffect(() => {
-    fetch('https://fakestoreapi.com/products?limit=5', { mode: 'cors' })
+    fetch(url, {
+      mode: 'cors',
+    })
       .then((response) => {
         //Throws error if response status is not ok
         if (!response.ok) {
@@ -25,7 +30,7 @@ function useDataFetching() {
         setData(null);
       })
       .finally(() => setLoading(false));
-  }, []);
+  }, [url]);
   return { data, error, loading };
 }
 
