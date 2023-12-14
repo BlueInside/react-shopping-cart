@@ -3,14 +3,14 @@ import { renderHook, waitFor } from '@testing-library/react';
 import useDataFetching from '../hooks/useDataFetching';
 
 describe('useDataFetching', () => {
-  const numberOfItems = 5;
-  const url = `https://fakestoreapi.com/products${
-    numberOfItems && '?limit=' + numberOfItems
-  }`;
+  let numberOfItems = 5;
+  // let url = `https://fakestoreapi.com/products${
+  //   numberOfItems && '?limit=' + numberOfItems
+  // }`;
 
   it('initializes with correct initial state', () => {
     // Render useDataFetch
-    const { result } = renderHook(() => useDataFetching(url));
+    const { result } = renderHook(() => useDataFetching(numberOfItems));
 
     expect(result.current.data).toBeNull();
     expect(result.current.error).toBeNull();
@@ -27,7 +27,9 @@ describe('useDataFetching', () => {
       })
     );
 
-    const { result, rerender } = renderHook(() => useDataFetching(url));
+    const { result, rerender } = renderHook(() =>
+      useDataFetching(numberOfItems)
+    );
 
     //Wait for data to load
     await waitFor(() => {
@@ -48,7 +50,7 @@ describe('useDataFetching', () => {
       Promise.reject(new Error('Failed to fetch data'))
     );
 
-    const { result } = renderHook(() => useDataFetching(url));
+    const { result } = renderHook(() => useDataFetching(numberOfItems));
     expect(result.current.error).toBeNull();
 
     // Wait for data to load
@@ -68,7 +70,7 @@ describe('useDataFetching', () => {
       })
     );
 
-    const { result } = renderHook(() => useDataFetching(url));
+    const { result } = renderHook(() => useDataFetching(numberOfItems));
     expect(result.current.data).toBeNull();
     expect(result.current.error).toBeNull();
     expect(result.current.loading).toBeTruthy();
@@ -86,7 +88,7 @@ describe('useDataFetching', () => {
       Promise.reject(new Error('Failed to fetch data'))
     );
 
-    const { result } = renderHook(() => useDataFetching(url));
+    const { result } = renderHook(() => useDataFetching(numberOfItems));
     expect(result.current.data).toBeNull();
     expect(result.current.error).toBeNull();
     expect(result.current.loading).toBeTruthy();
@@ -95,6 +97,26 @@ describe('useDataFetching', () => {
       expect(result.current.loading).toBeFalsy();
       expect(result.current.data).toBeNull();
       expect(result.current.error).toEqual(new Error('Failed to fetch data'));
+    });
+  });
+
+  it('changing numberOfItems changes number of fetched items', async () => {
+    numberOfItems = 2;
+
+    globalThis.fetch = vi.fn(() =>
+      Promise.resolve({
+        ok: true,
+        json: () => {
+          return Promise.resolve([{ item: 1 }, { item: 2 }]);
+        },
+      })
+    );
+
+    const { result } = renderHook(() => useDataFetching(numberOfItems));
+    console.log('Result: ' + result.current.data);
+
+    await waitFor(() => {
+      expect(result.current.data).toHaveLength(2);
     });
   });
 });
