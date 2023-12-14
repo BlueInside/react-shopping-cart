@@ -6,6 +6,13 @@ exports[`MainPage > renders MainPage component correctly 1`] = `
     <h1>
       Trend Tribe: Join the Fashion Revolution
     </h1>
+    <div>
+      <p
+        role="status"
+      >
+        Loading...
+      </p>
+    </div>
     <button>
       Discover more
     </button>
