@@ -1,0 +1,14 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`MainPage > renders MainPage component correctly 1`] = `
+<div>
+  <main>
+    <h1>
+      Trend Tribe: Join the Fashion Revolution
+    </h1>
+    <button>
+      Discover more
+    </button>
+  </main>
+</div>
+`;
