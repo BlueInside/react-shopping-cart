@@ -5,7 +5,7 @@ function useDataFetching(numberOfItems) {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const url = `https://fakestoreapi.com/products${
-    numberOfItems && '?limit=' + numberOfItems
+    numberOfItems && `?limit=${numberOfItems}`
   }`;
 
   useEffect(() => {
