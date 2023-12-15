@@ -1,8 +1,10 @@
 import Button from '../components/Button';
 import useDataFetching from '../hooks/useDataFetching';
+
 function MainPage() {
   const { data, error, loading } = useDataFetching(3);
   if (error) return <p role="error">Error</p>;
+
   return (
     <main>
       <h1>Trend Tribe: Join the Fashion Revolution</h1>
