@@ -57,4 +57,10 @@ describe('Button component', () => {
     await user.keyboard('{Enter}');
     expect(handleClick).toHaveBeenCalled();
   });
+  it('should accept role prop that set up its role', () => {
+    render(<Button handleClick={() => {}} role="customRole" />);
+    const button = screen.getByRole('customRole');
+
+    expect(button).not.toBeUndefined();
+  });
 });
