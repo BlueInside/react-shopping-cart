@@ -18,6 +18,28 @@ exports[`ProductCard component > renders ProductCard correctly 1`] = `
         >
           someTitle
         </p>
+        <div>
+          <button
+            role="add"
+          >
+            +
+          </button>
+          <label
+            for="quantity"
+          />
+          <input
+            id="quantity"
+            min="0"
+            role="quantity"
+            type="number"
+            value="0"
+          />
+          <button
+            role="remove"
+          >
+            -
+          </button>
+        </div>
       </div>
     </div>
   </body>,
@@ -35,6 +57,28 @@ exports[`ProductCard component > renders ProductCard correctly 1`] = `
       >
         someTitle
       </p>
+      <div>
+        <button
+          role="add"
+        >
+          +
+        </button>
+        <label
+          for="quantity"
+        />
+        <input
+          id="quantity"
+          min="0"
+          role="quantity"
+          type="number"
+          value="0"
+        />
+        <button
+          role="remove"
+        >
+          -
+        </button>
+      </div>
     </div>
   </div>,
   "debug": [Function],
