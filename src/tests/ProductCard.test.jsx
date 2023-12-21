@@ -87,8 +87,13 @@ describe('ProductCard component', () => {
     await user.clear(amountInput);
     expect(amountInput).toHaveValue(0);
 
+    // Clicking add twice should increase the quantity to 2
+    await user.click(addBtn);
+    await user.click(addBtn);
+    expect(amountInput).toHaveValue(2);
+
     // // Typing '34' and pressing Enter should set the value to 34
-    await user.type(amountInput, '34');
+    await user.type(amountInput, '{backspace}34');
     expect(amountInput).toHaveValue(34);
   });
 });
