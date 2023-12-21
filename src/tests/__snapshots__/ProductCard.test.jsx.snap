@@ -40,6 +40,11 @@ exports[`ProductCard component > renders ProductCard correctly 1`] = `
             -
           </button>
         </div>
+        <button
+          role="addToCart"
+        >
+          addToCart
+        </button>
       </div>
     </div>
   </body>,
@@ -79,6 +84,11 @@ exports[`ProductCard component > renders ProductCard correctly 1`] = `
           -
         </button>
       </div>
+      <button
+        role="addToCart"
+      >
+        addToCart
+      </button>
     </div>
   </div>,
   "debug": [Function],
