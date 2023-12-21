@@ -5,6 +5,11 @@ import { useState } from 'react';
 function ProductCard({ image, title, description, onClick }) {
   const [quantity, setQuantity] = useState(0);
 
+  // TODO implement addToCart
+  function handleAddToCart() {
+    return;
+  }
+
   function handleChange(event) {
     const inputValue = event.target.value;
 
@@ -42,6 +47,11 @@ function ProductCard({ image, title, description, onClick }) {
         />
         <Button handleClick={handleReduce} label={'-'} role={'remove'} />
       </div>
+      <Button
+        role={'addToCart'}
+        handleClick={handleAddToCart}
+        label={'addToCart'}
+      />
     </div>
   );
 }
