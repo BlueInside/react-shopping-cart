@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import Button from './Button';
 import { useState } from 'react';
 
-function ProductCard({ image, title, description, onClick }) {
+function ProductCard({ image, price, title, description, onClick }) {
   const [quantity, setQuantity] = useState(0);
 
   // TODO implement addToCart
@@ -34,6 +34,7 @@ function ProductCard({ image, title, description, onClick }) {
     <div role="productCard">
       <img onClick={onClick} src={image} alt="item" role="productImage" />
       <p role="productTitle">{title}</p>
+      <p>{price}</p>
       <div>
         <Button handleClick={handleIncrement} label={'+'} role="add" />
         <label htmlFor="quantity" />
@@ -58,6 +59,7 @@ function ProductCard({ image, title, description, onClick }) {
 
 ProductCard.propTypes = {
   image: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
   onClick: PropTypes.func.isRequired,
