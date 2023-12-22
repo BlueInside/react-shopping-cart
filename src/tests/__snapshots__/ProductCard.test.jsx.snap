@@ -11,13 +11,14 @@ exports[`ProductCard component > renders ProductCard correctly 1`] = `
         <img
           alt="item"
           role="productImage"
-          src="#"
+          src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
         />
         <p
           role="productTitle"
         >
-          someTitle
+          Women's Classic Trench Coat
         </p>
+        <p />
         <div>
           <button
             role="add"
@@ -55,13 +56,14 @@ exports[`ProductCard component > renders ProductCard correctly 1`] = `
       <img
         alt="item"
         role="productImage"
-        src="#"
+        src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
       />
       <p
         role="productTitle"
       >
-        someTitle
+        Women's Classic Trench Coat
       </p>
+      <p />
       <div>
         <button
           role="add"
