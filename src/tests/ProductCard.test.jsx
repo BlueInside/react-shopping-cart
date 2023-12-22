@@ -5,10 +5,14 @@ import userEvent from '@testing-library/user-event';
 
 describe('ProductCard component', () => {
   let product = {
-    id: 1,
-    image: '#',
-    title: 'someTitle',
-    description: 'someDescription',
+    id: 4,
+    title: "Women's Classic Trench Coat",
+    price: 89.99,
+    description:
+      'Stay stylish and comfortable with this classic trench coat for women. Perfect for rainy days and a fashionable choice for any season.',
+    category: "women's clothing",
+    image: 'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg',
+    rating: { rate: 4.2, count: 150 },
   };
 
   it('renders ProductCard correctly', () => {
