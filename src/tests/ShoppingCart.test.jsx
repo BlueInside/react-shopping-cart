@@ -1,6 +1,7 @@
 import { render, screen, within } from '@testing-library/react';
 import { describe, expect, it } from 'vitest';
 import ShoppingCart from '../components/ShoppingCart';
+import userEvent from '@testing-library/user-event';
 
 describe('ShoppingCart component', () => {
   const shoppingCart = [
@@ -13,6 +14,7 @@ describe('ShoppingCart component', () => {
       category: "women's clothing",
       image: 'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg',
       rating: { rate: 4.2, count: 150 },
+      quantity: 1,
     },
     {
       id: 5,
@@ -35,6 +37,7 @@ describe('ShoppingCart component', () => {
       category: 'furniture',
       image: 'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg',
       rating: { rate: 4.0, count: 100 },
+      quantity: 1,
     },
   ];
 
@@ -66,6 +69,35 @@ describe('ShoppingCart component', () => {
         `Quantity: ${hasQuantity ? shoppingCart[index].quantity : 1}`
       );
       expect(image).toHaveAttribute('src', shoppingCart[index].image);
+    });
+  });
+  it('Has quantity input field and buttons to add or remove quantities', () => {
+    const user = userEvent.setup();
+
+    render(<ShoppingCart products={shoppingCart} />);
+    const qtyControls = screen.getAllByRole('quantityControlsContainer');
+
+    expect(qtyControls).toHaveLength(shoppingCart);
+
+    qtyControls.forEach(async (container, index) => {
+      const qtyField = screen.within(container).getByRole('qtyInput');
+      const addBtn = screen.within(container).getByRole('add');
+      const removeBtn = screen.within(container).getByRole('remove');
+
+      expect(qtyField).toHaveValue(shoppingCart[index].quantity);
+
+      if (shoppingCart[index].quantity === 1) {
+        // quantity value doesn't go below 1;
+        await user.click(removeBtn);
+        expect(qtyField).toHaveValue(1);
+      }
+      // Click add button increases product quantity by 1
+      await user.click(addBtn);
+      expect(qtyField).toHaveValue(shoppingCart[index].quantity + 1);
+
+      // Click remove button increases product quantity by 1
+      await user.click(removeBtn);
+      expect(qtyField).toHaveValue(shoppingCart[index].quantity);
     });
   });
 });
