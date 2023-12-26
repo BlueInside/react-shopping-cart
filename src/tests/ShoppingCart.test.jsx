@@ -53,6 +53,7 @@ describe('ShoppingCart component', () => {
       let elementPrice = shoppingCart[index].price;
       let elementQuantity = shoppingCart[index].quantity;
 
+      const image = within(item).getByRole('cartItemImage');
       const title = within(item).getByRole('cartItemTitle');
       const price = within(item).getByRole('cartItemPrice');
       const quantity = within(item).getByRole('cartItemQuantity');
@@ -64,6 +65,7 @@ describe('ShoppingCart component', () => {
       expect(quantity).toHaveTextContent(
         `Quantity: ${hasQuantity ? shoppingCart[index].quantity : 1}`
       );
+      expect(image).toHaveAttribute('src', shoppingCart[index].image);
     });
   });
 });
