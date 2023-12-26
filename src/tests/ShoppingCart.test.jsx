@@ -14,7 +14,7 @@ describe('ShoppingCart component', () => {
       category: "women's clothing",
       image: 'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg',
       rating: { rate: 4.2, count: 150 },
-      quantity: 1,
+      quantity: 2,
     },
     {
       id: 5,
@@ -42,7 +42,7 @@ describe('ShoppingCart component', () => {
   ];
 
   it('renders ShoppingCart properly', () => {
-    const { container } = render(<ShoppingCart />);
+    const { container } = render(<ShoppingCart products={shoppingCart} />);
     expect(container).toMatchSnapshot();
   });
   it('Displays items based on ShoppingCart Array', () => {
@@ -52,7 +52,6 @@ describe('ShoppingCart component', () => {
     expect(displayedItems).toHaveLength(shoppingCart.length);
 
     displayedItems.forEach((item, index) => {
-      let hasQuantity = !!shoppingCart[index].quantity;
       let elementPrice = shoppingCart[index].price;
       let elementQuantity = shoppingCart[index].quantity;
 
@@ -60,44 +59,45 @@ describe('ShoppingCart component', () => {
       const title = within(item).getByRole('cartItemTitle');
       const price = within(item).getByRole('cartItemPrice');
       const quantity = within(item).getByRole('cartItemQuantity');
-      expect(title).toHaveTextContent(shoppingCart[index].title);
-      expect(price).toHaveTextContent(
-        `$${hasQuantity ? elementPrice * elementQuantity : elementPrice * 1}`
-      );
 
-      expect(quantity).toHaveTextContent(
-        `Quantity: ${hasQuantity ? shoppingCart[index].quantity : 1}`
-      );
+      expect(title).toHaveTextContent(shoppingCart[index].title);
+      expect(price).toHaveTextContent(`$${elementPrice * elementQuantity}`);
+
+      expect(quantity).toHaveTextContent(`${shoppingCart[index].quantity}`);
       expect(image).toHaveAttribute('src', shoppingCart[index].image);
     });
   });
-  it('Has quantity input field and buttons to add or remove quantities', () => {
+  it('Has quantity input field and buttons to add or remove quantities', async () => {
     const user = userEvent.setup();
 
     render(<ShoppingCart products={shoppingCart} />);
+
     const qtyControls = screen.getAllByRole('quantityControlsContainer');
+    expect(qtyControls).toHaveLength(shoppingCart.length);
 
-    expect(qtyControls).toHaveLength(shoppingCart);
+    let i = 0;
+    for (let container of qtyControls) {
+      let add = within(container).getByRole('add');
+      let qty = within(container).getByRole('cartItemQuantity');
+      let remove = within(container).getByRole('remove');
 
-    qtyControls.forEach(async (container, index) => {
-      const qtyField = screen.within(container).getByRole('qtyInput');
-      const addBtn = screen.within(container).getByRole('add');
-      const removeBtn = screen.within(container).getByRole('remove');
+      expect(qty).toHaveTextContent(shoppingCart[i].quantity);
 
-      expect(qtyField).toHaveValue(shoppingCart[index].quantity);
-
-      if (shoppingCart[index].quantity === 1) {
-        // quantity value doesn't go below 1;
-        await user.click(removeBtn);
-        expect(qtyField).toHaveValue(1);
+      if (qty.textContent == 1) {
+        // Doesn't go below 0
+        await user.click(remove);
+        expect(qty).toHaveTextContent(1);
       }
-      // Click add button increases product quantity by 1
-      await user.click(addBtn);
-      expect(qtyField).toHaveValue(shoppingCart[index].quantity + 1);
 
-      // Click remove button increases product quantity by 1
-      await user.click(removeBtn);
-      expect(qtyField).toHaveValue(shoppingCart[index].quantity);
-    });
+      // Click increase quantity by one
+      await user.click(add);
+      expect(qty).toHaveTextContent(shoppingCart[i].quantity + 1);
+
+      // Click decrease quantity by one
+      await user.click(remove);
+      expect(qty).toHaveTextContent(shoppingCart[i].quantity);
+
+      i += 1;
+    }
   });
 });
