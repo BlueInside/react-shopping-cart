@@ -1,10 +1,10 @@
 import { render, screen, within } from '@testing-library/react';
-import { describe, expect, it } from 'vitest';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import ShoppingCart from '../components/ShoppingCart';
 import userEvent from '@testing-library/user-event';
-
-describe('ShoppingCart component', () => {
-  const shoppingCart = [
+let shoppingCart = [];
+beforeEach(() => {
+  shoppingCart = [
     {
       id: 4,
       title: "Women's Classic Trench Coat",
@@ -40,7 +40,8 @@ describe('ShoppingCart component', () => {
       quantity: 1,
     },
   ];
-
+});
+describe('ShoppingCart component', () => {
   it('renders ShoppingCart properly', () => {
     const { container } = render(<ShoppingCart products={shoppingCart} />);
     expect(container).toMatchSnapshot();
@@ -100,4 +101,20 @@ describe('ShoppingCart component', () => {
       i += 1;
     }
   });
+
+  it('has delete button that removes item from shopping cart', async () => {
+    const user = userEvent.setup();
+
+    render(<ShoppingCart products={shoppingCart} />);
+    let deleteButtons = screen.getAllByRole('deleteCartItem');
+    let cartItems = screen.getAllByRole('cartItem');
+    expect(cartItems).toHaveLength(shoppingCart.length);
+
+    await user.click(deleteButtons[0]);
+    cartItems = screen.getAllByRole('cartItem');
+    expect(cartItems).toHaveLength(shoppingCart.length - 1);
+  });
+
+  it('displays total price of all the products', () => {});
+  it('display empty cart message when cart is empty', () => {});
 });
