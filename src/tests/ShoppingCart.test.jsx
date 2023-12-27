@@ -115,6 +115,10 @@ describe('ShoppingCart component', () => {
     expect(cartItems).toHaveLength(shoppingCart.length - 1);
   });
 
-  it('displays total price of all the products', () => {});
-  it('display empty cart message when cart is empty', () => {});
+  it('displays total price of all the products', () => {
+    //TODO
+  });
+  it('display empty cart message when cart is empty', () => {
+    //TODO
+  });
 });
