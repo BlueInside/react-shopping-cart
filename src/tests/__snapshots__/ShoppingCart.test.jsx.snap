@@ -42,6 +42,11 @@ exports[`ShoppingCart component > renders ShoppingCart properly 1`] = `
           remove
         </button>
       </div>
+      <button
+        role="deleteCartItem"
+      >
+        Delete Icon
+      </button>
     </div>
     <div
       role="cartItem"
@@ -82,6 +87,11 @@ exports[`ShoppingCart component > renders ShoppingCart properly 1`] = `
           remove
         </button>
       </div>
+      <button
+        role="deleteCartItem"
+      >
+        Delete Icon
+      </button>
     </div>
     <div
       role="cartItem"
@@ -122,6 +132,11 @@ exports[`ShoppingCart component > renders ShoppingCart properly 1`] = `
           remove
         </button>
       </div>
+      <button
+        role="deleteCartItem"
+      >
+        Delete Icon
+      </button>
     </div>
   </div>
 </div>
