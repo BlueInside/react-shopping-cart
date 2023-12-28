@@ -1,36 +1,43 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import Button from './Button';
-function CartItem({ image, title, price, quantity = 1, handleDeleteCartItem }) {
-  const [qty, setQty] = useState(quantity);
-
+function CartItem({
+  image,
+  title,
+  price,
+  quantity,
+  setQuantity,
+  handleDeleteCartItem,
+}) {
   function handleAddQty() {
-    setQty((qty) => qty + 1);
+    setQuantity(quantity + 1);
   }
 
   function handleRemoveQty() {
-    if (qty > 1) setQty((qty) => qty - 1);
+    if (quantity > 1) setQuantity(quantity - 1);
   }
 
   return (
-    <div role="cartItem">
-      <img src={image} alt="product" role="cartItemImage" />
-      <p role="cartItemTitle">{title}</p>
-      <p role="cartItemPrice">${price * qty}`</p>
-      <div role="quantityControlsContainer">
-        <Button role={'add'} label={'add'} handleClick={handleAddQty} />
-        <p role="cartItemQuantity">{qty}</p>
+    <div>
+      <div role="cartItem">
+        <img src={image} alt="product" role="cartItemImage" />
+        <p role="cartItemTitle">{title}</p>
+        <p role="cartItemPrice">${price * quantity}`</p>
+        <div role="quantityControlsContainer">
+          <Button role={'addQuantity'} label={'+'} handleClick={handleAddQty} />
+          <p role="cartItemQuantity">{quantity}</p>
+          <Button
+            role={'reduceQuantity'}
+            label={'-'}
+            handleClick={handleRemoveQty}
+          />
+        </div>
         <Button
-          role={'remove'}
-          label={'remove'}
-          handleClick={handleRemoveQty}
+          label={'Delete Icon'}
+          role={'deleteCartItem'}
+          handleClick={handleDeleteCartItem}
         />
       </div>
-      <Button
-        label={'Delete Icon'}
-        role={'deleteCartItem'}
-        handleClick={handleDeleteCartItem}
-      />
     </div>
   );
 }
@@ -41,11 +48,18 @@ CartItem.propTypes = {
   price: PropTypes.number.isRequired,
   handleDeleteCartItem: PropTypes.func.isRequired,
   quantity: PropTypes.number,
+  setQuantity: PropTypes.func.isRequired,
 };
 
 CartItem.defaultProps = {};
 function ShoppingCart({ products }) {
   const [cartProducts, setCartProducts] = useState(products);
+
+  let totalCartPrice = cartProducts.reduce(
+    (sum, obj) => sum + obj.price * obj.quantity,
+    0
+  );
+  let roundedTotalCartPrice = parseFloat(totalCartPrice.toFixed(2));
 
   function handleDeleteCartItem(productId) {
     const updatedArray = cartProducts.filter(
@@ -53,19 +67,37 @@ function ShoppingCart({ products }) {
     );
     setCartProducts(updatedArray);
   }
+  function updateProductQuantity(productId, newQuantity) {
+    setCartProducts((prevProducts) =>
+      prevProducts.map((product) =>
+        product.id === productId
+          ? { ...product, quantity: newQuantity }
+          : product
+      )
+    );
+  }
 
   return (
     <div>
-      {cartProducts.map((product) => (
-        <CartItem
-          key={product.id}
-          title={product.title}
-          price={product.price}
-          quantity={product.quantity}
-          image={product.image}
-          handleDeleteCartItem={() => handleDeleteCartItem(product.id)}
-        />
-      ))}
+      <div>
+        {cartProducts.map((product) => (
+          <CartItem
+            key={product.id}
+            title={product.title}
+            price={product.price}
+            quantity={product.quantity}
+            image={product.image}
+            setQuantity={(newQuantity) =>
+              updateProductQuantity(product.id, newQuantity)
+            }
+            handleDeleteCartItem={() => handleDeleteCartItem(product.id)}
+          />
+        ))}
+      </div>
+
+      <div>
+        <p role="totalCartPrice">Total: {roundedTotalCartPrice}</p>
+      </div>
     </div>
   );
 }
