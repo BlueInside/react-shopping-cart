@@ -1,5 +1,5 @@
 import { render, screen, within } from '@testing-library/react';
-import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { beforeEach, describe, expect, it } from 'vitest';
 import ShoppingCart from '../components/ShoppingCart';
 import userEvent from '@testing-library/user-event';
 let shoppingCart = [];
@@ -78,9 +78,9 @@ describe('ShoppingCart component', () => {
 
     let i = 0;
     for (let container of qtyControls) {
-      let add = within(container).getByRole('add');
+      let add = within(container).getByRole('addQuantity');
       let qty = within(container).getByRole('cartItemQuantity');
-      let remove = within(container).getByRole('remove');
+      let remove = within(container).getByRole('reduceQuantity');
 
       expect(qty).toHaveTextContent(shoppingCart[i].quantity);
 
@@ -115,8 +115,49 @@ describe('ShoppingCart component', () => {
     expect(cartItems).toHaveLength(shoppingCart.length - 1);
   });
 
-  it('displays total price of all the products', () => {
-    //TODO
+  it('displays total price of all the products', async () => {
+    shoppingCart = [
+      {
+        id: 4,
+        title: "Women's Classic Trench Coat",
+        price: 89.99,
+        description:
+          'Stay stylish and comfortable with this classic trench coat for women. Perfect for rainy days and a fashionable choice for any season.',
+        category: "women's clothing",
+        image: 'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg',
+        rating: { rate: 4.2, count: 150 },
+        quantity: 2,
+      },
+    ];
+    const user = userEvent.setup();
+
+    render(<ShoppingCart products={shoppingCart} />);
+    const totalPara = screen.getByRole('totalCartPrice');
+    const addQtyBtn = screen.getByRole('addQuantity');
+    const reduceQtyBtn = screen.getByRole('reduceQuantity');
+    const cartSum = shoppingCart.reduce(
+      (sum, obj) => sum + obj.price * obj.quantity,
+      0
+    );
+    const roundedCartSum = parseFloat(cartSum.toFixed(2));
+
+    expect(totalPara).toHaveTextContent(`Total: ${roundedCartSum}`);
+    let currentQty = 2;
+    // Reduce quantity to check if total price changes accordingly
+    await user.click(reduceQtyBtn);
+    currentQty = currentQty - 1;
+
+    let newTotal = () =>
+      parseFloat((shoppingCart[0].price * currentQty).toFixed(2));
+
+    expect(totalPara).toHaveTextContent(`Total: ${newTotal()}`);
+
+    await user.click(addQtyBtn);
+    currentQty = currentQty + 1;
+    await user.click(addQtyBtn);
+    currentQty = currentQty + 1;
+
+    expect(totalPara).toHaveTextContent(`Total: ${newTotal()}`);
   });
   it('display empty cart message when cart is empty', () => {
     //TODO
