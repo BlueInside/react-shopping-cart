@@ -60,6 +60,7 @@ function ShoppingCart({ products }) {
     0
   );
   let roundedTotalCartPrice = parseFloat(totalCartPrice.toFixed(2));
+  let isCartEmpty = cartProducts.length < 1 ? true : false;
 
   function handleDeleteCartItem(productId) {
     const updatedArray = cartProducts.filter(
@@ -76,30 +77,37 @@ function ShoppingCart({ products }) {
       )
     );
   }
-
-  return (
-    <div>
+  if (isCartEmpty) {
+    return (
+      <p role="emptyCartInfo">
+        Your cart is empty. Start shopping to add items!
+      </p>
+    );
+  } else {
+    return (
       <div>
-        {cartProducts.map((product) => (
-          <CartItem
-            key={product.id}
-            title={product.title}
-            price={product.price}
-            quantity={product.quantity}
-            image={product.image}
-            setQuantity={(newQuantity) =>
-              updateProductQuantity(product.id, newQuantity)
-            }
-            handleDeleteCartItem={() => handleDeleteCartItem(product.id)}
-          />
-        ))}
-      </div>
+        <div>
+          {cartProducts.map((product) => (
+            <CartItem
+              key={product.id}
+              title={product.title}
+              price={product.price}
+              quantity={product.quantity}
+              image={product.image}
+              setQuantity={(newQuantity) =>
+                updateProductQuantity(product.id, newQuantity)
+              }
+              handleDeleteCartItem={() => handleDeleteCartItem(product.id)}
+            />
+          ))}
+        </div>
 
-      <div>
-        <p role="totalCartPrice">Total: {roundedTotalCartPrice}</p>
+        <div>
+          <p role="totalCartPrice">Total: {roundedTotalCartPrice}</p>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 ShoppingCart.propTypes = {
