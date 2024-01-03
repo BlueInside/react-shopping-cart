@@ -18,7 +18,9 @@ exports[`ProductCard component > renders ProductCard correctly 1`] = `
         >
           Women's Classic Trench Coat
         </p>
-        <p />
+        <p>
+          89.99
+        </p>
         <div>
           <button
             role="add"
@@ -63,7 +65,9 @@ exports[`ProductCard component > renders ProductCard correctly 1`] = `
       >
         Women's Classic Trench Coat
       </p>
-      <p />
+      <p>
+        89.99
+      </p>
       <div>
         <button
           role="add"
