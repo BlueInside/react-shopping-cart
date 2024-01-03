@@ -21,6 +21,7 @@ describe('ProductCard component', () => {
         image={product.image}
         title={product.title}
         description={product.description}
+        price={product.price}
       />
     );
     expect(container).toMatchSnapshot();
@@ -29,7 +30,13 @@ describe('ProductCard component', () => {
     const consoleMock = vi.spyOn(console, 'error');
 
     // Doesn't pass description in props
-    render(<ProductCard image={product.image} title={product.title} />);
+    render(
+      <ProductCard
+        image={product.image}
+        title={product.title}
+        price={product.price}
+      />
+    );
     expect(consoleMock).toHaveBeenCalled();
 
     consoleMock.mockReset();
