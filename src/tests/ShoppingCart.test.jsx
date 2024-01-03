@@ -160,6 +160,10 @@ describe('ShoppingCart component', () => {
     expect(totalPara).toHaveTextContent(`Total: ${newTotal()}`);
   });
   it('display empty cart message when cart is empty', () => {
-    //TODO
+    shoppingCart = [];
+    render(<ShoppingCart products={shoppingCart} />);
+    const emptyCartPara = screen.getByRole('emptyCartInfo');
+
+    expect(emptyCartPara).toBeInTheDocument();
   });
 });
