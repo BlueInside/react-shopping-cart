@@ -110,7 +110,21 @@ describe('ShoppingCart component', () => {
     let cartItems = screen.getAllByRole('cartItem');
     expect(cartItems).toHaveLength(shoppingCart.length);
 
+    // Displays confirmation modal
     await user.click(deleteButtons[0]);
+    let modalConfirmButton = screen.getByRole('confirmButton');
+    let modalCancelButton = screen.getByRole('cancelButton');
+
+    // Checks that no item is deleting if user cancel
+    await user.click(modalCancelButton);
+    cartItems = screen.getAllByRole('cartItem');
+    expect(cartItems).toHaveLength(shoppingCart.length);
+
+    await user.click(deleteButtons[0]);
+    modalConfirmButton = screen.getByRole('confirmButton');
+
+    // Checks that item is deleted from cart when modal is confirmed
+    await user.click(modalConfirmButton);
     cartItems = screen.getAllByRole('cartItem');
     expect(cartItems).toHaveLength(shoppingCart.length - 1);
   });
@@ -143,6 +157,7 @@ describe('ShoppingCart component', () => {
 
     expect(totalPara).toHaveTextContent(`Total: ${roundedCartSum}`);
     let currentQty = 2;
+
     // Reduce quantity to check if total price changes accordingly
     await user.click(reduceQtyBtn);
     currentQty = currentQty - 1;
@@ -165,5 +180,22 @@ describe('ShoppingCart component', () => {
     const emptyCartPara = screen.getByRole('emptyCartInfo');
 
     expect(emptyCartPara).toBeInTheDocument();
+  });
+
+  it('displays confirmation modal for deletion', async () => {
+    const user = userEvent.setup();
+
+    render(<ShoppingCart products={shoppingCart} />);
+
+    const deleteFirstItemBtn = screen.getAllByRole('deleteCartItem')[0];
+    await user.click(deleteFirstItemBtn);
+
+    const confirmationModal = screen.getByRole('confirmationModal');
+    expect(confirmationModal).toBeInTheDocument();
+
+    const modalCancelButton = screen.getByRole('cancelButton');
+    await user.click(modalCancelButton);
+
+    expect(confirmationModal).not.toBeInTheDocument();
   });
 });
