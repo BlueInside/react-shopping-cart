@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import { useState } from 'react';
 import Button from './Button';
+import ConfirmationModal from './ConfirmationModal';
+
 function CartItem({
   image,
   title,
@@ -9,6 +11,29 @@ function CartItem({
   setQuantity,
   handleDeleteCartItem,
 }) {
+  const [isConfirmationModalOpen, setConfirmationModalOpen] = useState(false);
+
+  function displayConfirmationModal() {
+    if (!isConfirmationModalOpen) {
+      setConfirmationModalOpen(true);
+    }
+  }
+
+  function hideConfirmationModal() {
+    if (isConfirmationModalOpen) {
+      setConfirmationModalOpen(false);
+    }
+  }
+
+  function onConfirm() {
+    handleDeleteCartItem();
+    hideConfirmationModal();
+  }
+
+  function onCancel() {
+    hideConfirmationModal();
+  }
+
   function handleAddQty() {
     setQuantity(quantity + 1);
   }
@@ -35,9 +60,16 @@ function CartItem({
         <Button
           label={'Delete Icon'}
           role={'deleteCartItem'}
-          handleClick={handleDeleteCartItem}
+          handleClick={displayConfirmationModal}
         />
       </div>
+      {isConfirmationModalOpen && (
+        <ConfirmationModal
+          message="Are you sure you want to delete this item?"
+          onConfirm={onConfirm}
+          onCancel={onCancel}
+        />
+      )}
     </div>
   );
 }
