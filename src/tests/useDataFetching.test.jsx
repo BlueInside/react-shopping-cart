@@ -4,9 +4,6 @@ import useDataFetching from '../hooks/useDataFetching';
 
 describe('useDataFetching', () => {
   let numberOfItems = 5;
-  // let url = `https://fakestoreapi.com/products${
-  //   numberOfItems && '?limit=' + numberOfItems
-  // }`;
 
   it('initializes with correct initial state', () => {
     // Render useDataFetch
