@@ -191,6 +191,10 @@ describe('ShoppingCart component', () => {
     await user.click(deleteFirstItemBtn);
 
     const confirmationModal = screen.getByRole('confirmationModal');
+    const modalMessage = screen.getByRole('modalMessage');
+    expect(modalMessage).toHaveTextContent(
+      'Are you sure you want to delete this item?'
+    );
     expect(confirmationModal).toBeInTheDocument();
 
     const modalCancelButton = screen.getByRole('cancelButton');
