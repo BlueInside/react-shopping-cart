@@ -117,7 +117,14 @@ describe('ShopPage component', () => {
     expect(productCards).toHaveLength(fetchedData.length);
   });
 
-  it('displays loading during fetch', () => {
-    global;
+  it('displays loading during fetch', async () => {
+    globalThis.fetch = vi.fn(() => new Promise(() => {}));
+
+    render(<ShopPage />);
+
+    await waitFor(() => {
+      const loadingText = screen.getByText('Loading...');
+      expect(loadingText).toBeInTheDocument();
+    });
   });
 });
