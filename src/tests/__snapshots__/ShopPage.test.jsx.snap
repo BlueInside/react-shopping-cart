@@ -1,3 +1,9 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ShopPage component > renders ShopPage correctly 1`] = `<div />`;
+exports[`ShopPage component > renders ShopPage correctly 1`] = `
+<div>
+  <div>
+    Loading...
+  </div>
+</div>
+`;
