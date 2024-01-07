@@ -1,11 +1,11 @@
-import { useEffect } from 'react';
 import useDataFetching from '../hooks/useDataFetching';
 import ProductCard from './ProductCard';
 
 function ShopPage() {
   const { data, loading, error } = useDataFetching(9);
   if (loading) return <div>Loading...</div>;
-  if (error) return <div>Error</div>;
+  if (error)
+    return <div>Oops! Something went wrong. Please try again later.</div>;
   return (
     <div>
       {data.map((product) => (
