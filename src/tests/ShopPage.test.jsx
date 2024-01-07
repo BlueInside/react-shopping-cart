@@ -127,4 +127,21 @@ describe('ShopPage component', () => {
       expect(loadingText).toBeInTheDocument();
     });
   });
+
+  it('displays error on fetch error', async () => {
+    globalThis.fetch = vi.fn(() => {
+      return Promise.reject(
+        new Error('Something went wrong during product fetch')
+      );
+    });
+
+    render(<ShopPage />);
+
+    await waitFor(() => {
+      const errorText = screen.queryByText(
+        'Oops! Something went wrong. Please try again later.'
+      );
+      expect(errorText).toBeInTheDocument();
+    });
+  });
 });
