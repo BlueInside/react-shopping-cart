@@ -1,10 +1,26 @@
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import Button from './Button';
 import PropTypes from 'prop-types';
 
 function FilterDropdown({ setSortOption }) {
   const [isOpen, setIsOpen] = useState(false);
 
+  const ref = useRef();
+
+  // Closes dropdown when clicked outside component
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        setIsOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
   function toggleDropdown() {
     setIsOpen(!isOpen);
   }
@@ -15,7 +31,7 @@ function FilterDropdown({ setSortOption }) {
     toggleDropdown();
   }
   return (
-    <div role={'dropdownContainer'}>
+    <div ref={ref} role={'dropdownContainer'}>
       <div>
         <Button
           role={'filter'}
