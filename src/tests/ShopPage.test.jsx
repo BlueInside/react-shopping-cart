@@ -1,8 +1,10 @@
-import { render, screen, waitFor } from '@testing-library/react';
-import { describe, expect, it, vi } from 'vitest';
+import { render, screen, waitFor, within } from '@testing-library/react';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
 import ShopPage from '../components/ShopPage';
-describe('ShopPage component', () => {
-  const fetchedData = [
+import userEvent from '@testing-library/user-event';
+let fetchedData;
+beforeEach(() => {
+  fetchedData = [
     {
       id: 1,
       title: 'Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops',
@@ -96,12 +98,9 @@ describe('ShopPage component', () => {
       rating: { rate: 3.3, count: 203 },
     },
   ];
-
-  it('renders ShopPage correctly', () => {
-    const { container } = render(<ShopPage />);
-    expect(container).toMatchSnapshot();
-  });
-  it('displays 9 ProductCard items', async () => {
+});
+describe('ShopPage component', () => {
+  const mockFetchSuccessfully = () => {
     globalThis.fetch = vi.fn(() => {
       return Promise.resolve({
         ok: true,
@@ -110,6 +109,13 @@ describe('ShopPage component', () => {
         },
       });
     });
+  };
+  it('renders ShopPage correctly', () => {
+    const { container } = render(<ShopPage />);
+    expect(container).toMatchSnapshot();
+  });
+  it('displays 9 ProductCard items', async () => {
+    mockFetchSuccessfully();
 
     render(<ShopPage />);
 
@@ -142,6 +148,182 @@ describe('ShopPage component', () => {
         'Oops! Something went wrong. Please try again later.'
       );
       expect(errorText).toBeInTheDocument();
+    });
+  });
+
+  it('Sorts products A-Z', async () => {
+    mockFetchSuccessfully();
+
+    const user = userEvent.setup();
+    render(<ShopPage />);
+
+    // Products cards in default order
+    const unsortedProductCards = await screen.findAllByRole('productCard');
+
+    // Sorts products title A-Z
+    const productsSortedAZ = [...unsortedProductCards]
+      .map((card) => within(card).getByRole('productTitle').textContent)
+      .sort((a, b) => a.localeCompare(b));
+
+    // Finds sort button
+    const sortButton = await screen.findByRole('filter');
+
+    // Opens up the filters dropdown
+    await user.click(sortButton);
+
+    // Sort cards A-Z
+    const sortOptionAZ = screen.getAllByRole('filterOption')[0];
+    await user.click(sortOptionAZ);
+
+    // Checks if sorts match
+    await waitFor(async () => {
+      const sortedProductCards = await screen.findAllByRole('productCard');
+      const sortedProductTitles = sortedProductCards.map(
+        (card) => within(card).getByRole('productTitle').textContent
+      );
+      expect(sortedProductTitles).toEqual(productsSortedAZ);
+
+      // Logs elements order
+      console.log('AZ: ', sortedProductTitles, productsSortedAZ);
+      screen.debug(screen.getAllByRole('productTitle'));
+    });
+
+    // Sorts products title A-Z
+    const productsSortedHighLow = [...unsortedProductCards]
+      .map((card) => within(card).getByRole('productTitle').textContent)
+      .sort((a, b) => b.localeCompare(a));
+
+    await user.click(sortButton);
+
+    // Sort cards Z-A
+    const sortOptionZA = screen.getAllByRole('filterOption')[1];
+    await user.click(sortOptionZA);
+
+    // Checks if sorts match
+    await waitFor(async () => {
+      const sortedProductCards = await screen.findAllByRole('productCard');
+      const sortedProductTitles = sortedProductCards.map(
+        (card) => within(card).getByRole('productTitle').textContent
+      );
+      expect(sortedProductTitles).toEqual(productsSortedHighLow);
+
+      // Logs elements order ZA
+      console.log('ZA: ', productsSortedHighLow);
+      screen.debug(screen.getAllByRole('productTitle'));
+    });
+  });
+
+  it('Sorts product cards by titles Z-A', async () => {
+    mockFetchSuccessfully();
+
+    const user = userEvent.setup();
+    render(<ShopPage />);
+
+    // Products cards in default order
+    const unsortedProductCards = await screen.findAllByRole('productCard');
+
+    // Sorts products title Z-A
+    const productsSortedZA = [...unsortedProductCards]
+      .map((card) => within(card).getByRole('productTitle').textContent)
+      .sort((a, b) => b.localeCompare(a));
+
+    // Finds sort button
+    const sortButton = await screen.findByRole('filter');
+
+    // Opens up the filters dropdown
+    await user.click(sortButton);
+
+    // Sort cards Z-A
+    const sortOptionZA = screen.getAllByRole('filterOption')[1];
+    await user.click(sortOptionZA);
+
+    // Checks if sorts match
+    await waitFor(async () => {
+      const sortedProductCards = await screen.findAllByRole('productCard');
+      const sortedProductTitles = sortedProductCards.map(
+        (card) => within(card).getByRole('productTitle').textContent
+      );
+      expect(sortedProductTitles).toEqual(productsSortedZA);
+
+      // Logs elements order
+      console.log('ZA: ', productsSortedZA);
+      screen.debug(screen.getAllByRole('productTitle'));
+    });
+  });
+
+  it('Sorts products by price low-high', async () => {
+    mockFetchSuccessfully();
+
+    const user = userEvent.setup();
+    render(<ShopPage />);
+
+    // Products cards in default order
+    const unsortedProductCards = await screen.findAllByRole('productCard');
+
+    // Sorts products by price low-high
+    const productsSortedZA = [...unsortedProductCards]
+      .map((card) => within(card).getByRole('productPrice').textContent)
+      .sort((a, b) => Number(a) - Number(b));
+
+    // Finds sort button
+    const sortButton = await screen.findByRole('filter');
+
+    // Opens up the filters dropdown
+    await user.click(sortButton);
+
+    // Sort cards low-high
+    const sortOptionLowHigh = screen.getAllByRole('filterOption')[2];
+    await user.click(sortOptionLowHigh);
+
+    // Checks if sorts match
+    await waitFor(async () => {
+      const sortedProductCards = await screen.findAllByRole('productCard');
+      const sortedProductTitles = sortedProductCards.map(
+        (card) => within(card).getByRole('productPrice').textContent
+      );
+      expect(sortedProductTitles).toEqual(productsSortedZA);
+
+      // Logs elements order
+      console.log('LowHigh: ', productsSortedZA);
+      screen.debug(screen.getAllByRole('productPrice'));
+    });
+  });
+
+  it('Sorts products by price high-low', async () => {
+    mockFetchSuccessfully();
+
+    const user = userEvent.setup();
+    render(<ShopPage />);
+
+    // Products cards in default order
+    const unsortedProductCards = await screen.findAllByRole('productCard');
+
+    // Sorts products by price high-low
+    const productsSortedHighLow = [...unsortedProductCards]
+      .map((card) => within(card).getByRole('productPrice').textContent)
+      .sort((a, b) => Number(b) - Number(a));
+
+    // Finds sort button
+    const sortButton = await screen.findByRole('filter');
+
+    // Opens up the filters dropdown
+    await user.click(sortButton);
+
+    // Sort cards low-high
+    const sortOptionHighLow = screen.getAllByRole('filterOption')[3];
+    await user.click(sortOptionHighLow);
+
+    // Checks if sorts match
+    await waitFor(async () => {
+      const sortedProductCards = await screen.findAllByRole('productCard');
+      const sortedProductTitles = sortedProductCards.map(
+        (card) => within(card).getByRole('productPrice').textContent
+      );
+      expect(sortedProductTitles).toEqual(productsSortedHighLow);
+
+      // Logs elements order
+      console.log('HighLow: ', productsSortedHighLow);
+      screen.debug(screen.getAllByRole('productPrice'));
     });
   });
 });
