@@ -34,7 +34,7 @@ function ProductCard({ image, price, title, description, onClick }) {
     <div role="productCard">
       <img onClick={onClick} src={image} alt="item" role="productImage" />
       <p role="productTitle">{title}</p>
-      <p>{price}</p>
+      <p role="productPrice">{price}</p>
       <div>
         <Button handleClick={handleIncrement} label={'+'} role="add" />
         <label htmlFor="quantity" />
