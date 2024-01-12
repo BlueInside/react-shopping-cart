@@ -1,0 +1,77 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`DisplayProductInformation component > renders DisplayProductInformation component correctly 1`] = `
+<div>
+  <div
+    role="productModal"
+  >
+    <div>
+      <img
+        alt="product"
+        role="productImage"
+        src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
+      />
+      <div>
+        <div>
+          <p
+            role="title"
+          >
+            Women's Classic Trench Coat
+          </p>
+          <p
+            role="rating"
+          >
+            4.2
+          </p>
+          <p
+            role="price"
+          >
+            89.99
+          </p>
+        </div>
+        <div>
+          <div
+            class="quantityControllers"
+          >
+            <button
+              role="add"
+            >
+              +
+            </button>
+            <input
+              min="1"
+              role="quantity"
+              type="number"
+              value="1"
+            />
+            <button
+              role="reduce"
+            >
+              -
+            </button>
+          </div>
+          <button
+            role="addToCart"
+          >
+            Add to cart
+          </button>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div>
+        <p
+          role="category"
+        >
+          women's clothing
+        </p>
+        <p
+          role="productDescription"
+        >
+          Stay stylish and comfortable with this classic trench coat for women. Perfect for rainy days and a fashionable choice for any season.
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+`;
