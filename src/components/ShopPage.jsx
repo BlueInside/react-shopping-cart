@@ -6,6 +6,7 @@ import { useState } from 'react';
 
 function ShopPage() {
   const [sortOption, setSortOption] = useState('default');
+
   let { data, loading, error } = useDataFetching(9, sortOption);
 
   function sortData(option) {
@@ -43,9 +44,8 @@ function ShopPage() {
             price={product.price}
             title={product.title}
             description={product.description}
-            onClick={() => {
-              console.log('click');
-            }}
+            rating={product.rating}
+            category={product.category}
           />
         ))}
       </div>
