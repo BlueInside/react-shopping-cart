@@ -37,13 +37,11 @@ exports[`DisplayProductInformation component > renders DisplayProductInformation
           >
             +
           </button>
-          <input
-            id="quantity"
-            min="0"
+          <span
             role="quantity"
-            type="number"
-            value="0"
-          />
+          >
+            0
+          </span>
           <button
             role="reduce"
           >
