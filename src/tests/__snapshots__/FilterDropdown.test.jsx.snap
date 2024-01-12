@@ -1,0 +1,17 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`FilterDropdown component > Renders FilterDropdown correctly 1`] = `
+<div>
+  <div
+    role="dropdownContainer"
+  >
+    <div>
+      <button
+        role="filter"
+      >
+        Sort by...
+      </button>
+    </div>
+  </div>
+</div>
+`;
