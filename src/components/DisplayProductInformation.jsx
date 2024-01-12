@@ -11,16 +11,6 @@ function DisplayProductInformation({
 }) {
   const [quantity, setQuantity] = useState(0);
 
-  function handleChange(event) {
-    const inputValue = event.target.value;
-
-    if (Number(inputValue)) {
-      setQuantity(parseInt(inputValue, 10));
-    } else {
-      setQuantity(quantity);
-    }
-  }
-
   function handleIncrement() {
     setQuantity((q) => q + 1);
   }
@@ -43,14 +33,7 @@ function DisplayProductInformation({
           </div>
           <div className="quantityControllers">
             <Button handleClick={handleIncrement} label={'+'} role="add" />
-            <input
-              type="number"
-              id="quantity"
-              role="quantity"
-              value={quantity}
-              min="0"
-              onChange={handleChange}
-            />
+            <span role="quantity">{quantity}</span>
             <Button handleClick={handleReduce} label={'-'} role={'reduce'} />
           </div>
         </div>
