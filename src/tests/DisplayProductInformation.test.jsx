@@ -24,13 +24,7 @@ describe('DisplayProductInformation component', () => {
   });
 
   it('displays product details accordingly to product object', async () => {
-    // const user = userEvent.setup();
-
     render(<DisplayProductInformation {...product} />);
-
-    // const amountInput = screen.getByRole('quantity');
-    // const removeBtn = screen.getByRole('remove');
-    // const addBtn = screen.getByRole('add');
 
     expect(screen.getByRole('productImage')).toHaveAttribute(
       'src',
@@ -49,35 +43,23 @@ describe('DisplayProductInformation component', () => {
     const user = userEvent.setup();
 
     render(<DisplayProductInformation {...product} />);
-    const amountInput = screen.getByRole('quantity');
+    const quantity = screen.getByRole('quantity');
     const addBtn = screen.getByRole('add');
 
     // Initial quantity is 0
-    expect(amountInput).toHaveValue(0);
+    expect(quantity).toHaveTextContent('0');
 
     // Clicking remove when the quantity is already 0 should not decrease it
     await user.click(screen.getByRole('reduce'));
-    expect(parseInt(amountInput.value)).toBe(0);
+    expect(quantity).toHaveTextContent('0');
 
     // // Clicking add should increase the quantity to 1
     await user.click(addBtn);
-    expect(parseInt(amountInput.value)).toBe(1);
+    expect(quantity).toHaveTextContent('1');
 
-    // Clicking on the input should focus it
-    await user.click(amountInput);
-    expect(amountInput).toHaveFocus();
-
-    // Clearing the input should set the value to ''
-    await user.clear(amountInput);
-    // console.log(amountInput.value);
-    expect(amountInput).toHaveValue(1);
-
-    // // Clicking add twice should increase the quantity to 2
-    // await user.click(addBtn);
-    // await user.click(addBtn);
-    // expect(amountInput).toHaveValue(2);
-    // // // Typing '34' and pressing Enter should set the value to 34
-    // await user.type(amountInput, '{backspace}34');
-    // expect(amountInput).toHaveValue(34);
+    // Clicking add twice should increase the quantity to 3
+    await user.click(addBtn);
+    await user.click(addBtn);
+    expect(quantity).toHaveTextContent('3');
   });
 });
