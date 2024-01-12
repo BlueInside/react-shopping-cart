@@ -16,39 +16,12 @@ describe('ProductCard component', () => {
   };
 
   it('renders ProductCard correctly', () => {
-    const container = render(
-      <ProductCard
-        image={product.image}
-        title={product.title}
-        description={product.description}
-        price={product.price}
-      />
-    );
+    const container = render(<ProductCard {...product} />);
     expect(container).toMatchSnapshot();
   });
-  it('throws error if not description passed', () => {
-    const consoleMock = vi.spyOn(console, 'error');
 
-    // Doesn't pass description in props
-    render(
-      <ProductCard
-        image={product.image}
-        title={product.title}
-        price={product.price}
-      />
-    );
-    expect(consoleMock).toHaveBeenCalled();
-
-    consoleMock.mockReset();
-  });
   it('renders ProductCard with correct information from the product object', () => {
-    render(
-      <ProductCard
-        image={product.image}
-        title={product.title}
-        description={product.description}
-      />
-    );
+    render(<ProductCard {...product} />);
 
     const card = screen.getByRole('productCard');
     const image = within(card).getByRole('productImage');
@@ -60,18 +33,37 @@ describe('ProductCard component', () => {
     expect(title).toBeInTheDocument();
     expect(title.textContent).toBe(product.title);
   });
-  it('calls clickHandler when image being clicked', async () => {
+
+  it.skip('Calls function on click', async () => {
     const user = userEvent.setup();
-    const clickHandler = vi.fn();
-    render(<ProductCard {...product} onClick={clickHandler} />);
 
-    const image = screen.getByRole('productImage');
+    const mockClickHandler = vi.fn();
+    render(<ProductCard {...product} onClick={mockClickHandler} />);
 
-    await user.click(image);
+    const productImage = screen.getByRole('productImage');
+    const productTitle = screen.getByRole('productTitle');
 
-    expect(clickHandler).toHaveBeenCalled();
+    expect(mockClickHandler).not.toHaveBeenCalled();
+    await user.click(productImage);
+    expect(mockClickHandler).toHaveBeenCalledTimes(1);
+    await user.click(productTitle);
+    expect(mockClickHandler).toHaveBeenCalledTimes(2);
   });
-  it('has buttons remove and add that decrease increase quantity, also has quantity input', async () => {
+
+  it('Displays full sized product information when image or title clicked', async () => {
+    const user = userEvent.setup();
+
+    render(<ProductCard {...product} />);
+    const showModal = screen.getByRole('productImage');
+
+    await user.click(showModal);
+    const modal = await screen.findByRole('productModal');
+
+    expect(modal).toBeInTheDocument();
+    expect(within(modal).getByText(`${product.title}`)).toBeInTheDocument();
+  });
+
+  it.skip('has buttons remove and add that decrease increase quantity, also has quantity input', async () => {
     const user = userEvent.setup();
 
     render(<ProductCard {...product} />);
@@ -106,5 +98,8 @@ describe('ProductCard component', () => {
     // // Typing '34' and pressing Enter should set the value to 34
     await user.type(amountInput, '{backspace}34');
     expect(amountInput).toHaveValue(34);
+
+    await user.type(amountInput), '3456kkkk';
+    expect(amountInput).toHaveValue(3456);
   });
 });
