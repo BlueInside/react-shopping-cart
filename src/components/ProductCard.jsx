@@ -1,43 +1,76 @@
 import PropTypes from 'prop-types';
-import Button from './Button';
 import { useState } from 'react';
-
-function ProductCard({ image, price, title, description, onClick }) {
-  const [quantity, setQuantity] = useState(0);
+import Button from './Button';
+import DisplayProductInformation from './DisplayProductInformation';
+function ProductCard({ image, price, title, description, rating, category }) {
+  // const [quantity, setQuantity] = useState(0);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   // TODO implement addToCart
   function handleAddToCart() {
     return;
   }
 
-  function handleChange(event) {
-    const inputValue = event.target.value;
-
-    if (Number(inputValue)) {
-      setQuantity(parseInt(inputValue, 10));
-    } else if (!isNaN(inputValue)) {
-      setQuantity(0);
-    }
+  function showProductModal() {
+    if (!isModalOpen) setIsModalOpen(true);
   }
 
-  function handleIncrement() {
-    setQuantity((q) => q + 1);
+  function closeProductModal() {
+    if (isModalOpen) setIsModalOpen(false);
   }
 
-  function handleReduce() {
-    if (quantity - 1 >= 0) {
-      setQuantity((q) => q - 1);
-    } else return;
+  // function handleChange(event) {
+  //   const inputValue = event.target.value;
+  //   const numericValue = Number(inputValue);
+
+  //   if (!isNaN(numericValue)) {
+  //     setQuantity(parseInt(inputValue, 10));
+  //   } else {
+  //     setQuantity(quantity);
+  //   }
+  // }
+
+  // function handleIncrement() {
+  //   setQuantity((q) => q + 1);
+  // }
+
+  // function handleReduce() {
+  //   if (quantity - 1 >= 0) {
+  //     setQuantity((q) => q - 1);
+  //   } else return;
+  // }
+
+  if (isModalOpen) {
+    return (
+      <DisplayProductInformation
+        image={image}
+        description={description}
+        price={price}
+        title={title}
+        category={category}
+        rating={rating}
+        // quantity={quantity}
+        // handleIncrement={handleIncrement}
+        // handleReduce={handleReduce}
+      />
+    );
   }
 
   return (
     <div role="productCard">
-      <img onClick={onClick} src={image} alt="item" role="productImage" />
-      <p role="productTitle">{title}</p>
+      <img
+        onClick={showProductModal}
+        src={image}
+        alt="item"
+        role="productImage"
+      />
+      <p onClick={showProductModal} role="productTitle">
+        {title}
+      </p>
       <p role="productPrice">{price}</p>
       <div>
-        <Button handleClick={handleIncrement} label={'+'} role="add" />
-        <label htmlFor="quantity" />
+        {/* <Button handleClick={handleIncrement} label={'+'} role="add" /> */}
+        {/* <label htmlFor="quantity" />
         <input
           type="number"
           id="quantity"
@@ -45,8 +78,8 @@ function ProductCard({ image, price, title, description, onClick }) {
           value={quantity}
           min="0"
           onChange={handleChange}
-        />
-        <Button handleClick={handleReduce} label={'-'} role={'remove'} />
+        /> */}
+        {/* <Button handleClick={handleReduce} label={'-'} role={'remove'} /> */}
       </div>
       <Button
         role={'addToCart'}
@@ -62,11 +95,14 @@ ProductCard.propTypes = {
   price: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   description: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
+  category: PropTypes.string.isRequired,
+  rating: PropTypes.shape({
+    rate: PropTypes.number,
+    count: PropTypes.number,
+  }),
 };
 
 ProductCard.defaultProps = {
   image: '#',
-  onClick: () => console.log('click handler not implemented'),
 };
 export default ProductCard;
