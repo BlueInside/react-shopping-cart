@@ -29,23 +29,31 @@ exports[`DisplayProductInformation component > renders DisplayProductInformation
             89.99
           </p>
         </div>
-        <div
-          class="quantityControllers"
-        >
+        <div>
+          <div
+            class="quantityControllers"
+          >
+            <button
+              role="add"
+            >
+              +
+            </button>
+            <input
+              min="1"
+              role="quantity"
+              type="number"
+              value="1"
+            />
+            <button
+              role="reduce"
+            >
+              -
+            </button>
+          </div>
           <button
-            role="add"
+            role="addToCart"
           >
-            +
-          </button>
-          <span
-            role="quantity"
-          >
-            0
-          </span>
-          <button
-            role="reduce"
-          >
-            -
+            Add to cart
           </button>
         </div>
       </div>

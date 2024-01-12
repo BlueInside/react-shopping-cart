@@ -23,7 +23,6 @@ exports[`ProductCard component > renders ProductCard correctly 1`] = `
         >
           89.99
         </p>
-        <div />
         <button
           role="addToCart"
         >
@@ -51,7 +50,6 @@ exports[`ProductCard component > renders ProductCard correctly 1`] = `
       >
         89.99
       </p>
-      <div />
       <button
         role="addToCart"
       >
