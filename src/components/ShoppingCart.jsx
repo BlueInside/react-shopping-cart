@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from './Button';
 import ConfirmationModal from './ConfirmationModal';
 
@@ -84,8 +84,15 @@ CartItem.propTypes = {
 };
 
 CartItem.defaultProps = {};
-function ShoppingCart({ products }) {
-  const [cartProducts, setCartProducts] = useState(products);
+function ShoppingCart() {
+  const [cartProducts, setCartProducts] = useState([]);
+  const storedCartItems = sessionStorage.getItem('cart');
+
+  useEffect(() => {
+    storedCartItems
+      ? setCartProducts(JSON.parse(storedCartItems))
+      : setCartProducts([]);
+  }, [storedCartItems]);
 
   let totalCartPrice = cartProducts.reduce(
     (sum, obj) => sum + obj.price * obj.quantity,
