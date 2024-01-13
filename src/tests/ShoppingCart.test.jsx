@@ -1,5 +1,5 @@
 import { render, screen, within } from '@testing-library/react';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { afterEach, beforeEach, describe, expect, it } from 'vitest';
 import ShoppingCart from '../components/ShoppingCart';
 import userEvent from '@testing-library/user-event';
 let shoppingCart = [];
@@ -40,14 +40,19 @@ beforeEach(() => {
       quantity: 1,
     },
   ];
+
+  window.sessionStorage.setItem('cart', JSON.stringify(shoppingCart));
+});
+afterEach(() => {
+  window.sessionStorage.clear();
 });
 describe('ShoppingCart component', () => {
   it('renders ShoppingCart properly', () => {
-    const { container } = render(<ShoppingCart products={shoppingCart} />);
+    const { container } = render(<ShoppingCart />);
     expect(container).toMatchSnapshot();
   });
   it('Displays items based on ShoppingCart Array', () => {
-    render(<ShoppingCart products={shoppingCart} />);
+    render(<ShoppingCart />);
 
     const displayedItems = screen.getAllByRole('cartItem');
     expect(displayedItems).toHaveLength(shoppingCart.length);
@@ -71,7 +76,7 @@ describe('ShoppingCart component', () => {
   it('Has quantity input field and buttons to add or remove quantities', async () => {
     const user = userEvent.setup();
 
-    render(<ShoppingCart products={shoppingCart} />);
+    render(<ShoppingCart />);
 
     const qtyControls = screen.getAllByRole('quantityControlsContainer');
     expect(qtyControls).toHaveLength(shoppingCart.length);
@@ -105,7 +110,7 @@ describe('ShoppingCart component', () => {
   it('has delete button that removes item from shopping cart', async () => {
     const user = userEvent.setup();
 
-    render(<ShoppingCart products={shoppingCart} />);
+    render(<ShoppingCart />);
     let deleteButtons = screen.getAllByRole('deleteCartItem');
     let cartItems = screen.getAllByRole('cartItem');
     expect(cartItems).toHaveLength(shoppingCart.length);
@@ -143,9 +148,11 @@ describe('ShoppingCart component', () => {
         quantity: 2,
       },
     ];
+
+    window.sessionStorage.setItem('cart', JSON.stringify(shoppingCart));
     const user = userEvent.setup();
 
-    render(<ShoppingCart products={shoppingCart} />);
+    render(<ShoppingCart />);
     const totalPara = screen.getByRole('totalCartPrice');
     const addQtyBtn = screen.getByRole('addQuantity');
     const reduceQtyBtn = screen.getByRole('reduceQuantity');
@@ -175,8 +182,8 @@ describe('ShoppingCart component', () => {
     expect(totalPara).toHaveTextContent(`Total: ${newTotal()}`);
   });
   it('display empty cart message when cart is empty', () => {
-    shoppingCart = [];
-    render(<ShoppingCart products={shoppingCart} />);
+    window.sessionStorage.clear();
+    render(<ShoppingCart />);
     const emptyCartPara = screen.getByRole('emptyCartInfo');
 
     expect(emptyCartPara).toBeInTheDocument();
@@ -185,7 +192,7 @@ describe('ShoppingCart component', () => {
   it('displays confirmation modal for deletion', async () => {
     const user = userEvent.setup();
 
-    render(<ShoppingCart products={shoppingCart} />);
+    render(<ShoppingCart />);
 
     const deleteFirstItemBtn = screen.getAllByRole('deleteCartItem')[0];
     await user.click(deleteFirstItemBtn);
