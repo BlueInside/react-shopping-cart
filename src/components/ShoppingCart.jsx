@@ -86,12 +86,16 @@ CartItem.propTypes = {
 CartItem.defaultProps = {};
 function ShoppingCart() {
   const [cartProducts, setCartProducts] = useState([]);
-  const storedCartItems = sessionStorage.getItem('cart');
+  let storedCartItems = sessionStorage.getItem('cart');
 
   useEffect(() => {
-    storedCartItems
-      ? setCartProducts(JSON.parse(storedCartItems))
-      : setCartProducts([]);
+    try {
+      storedCartItems
+        ? setCartProducts(JSON.parse(storedCartItems))
+        : setCartProducts([]);
+    } catch (error) {
+      console.log('Failed to parse cart items: ', error);
+    }
   }, [storedCartItems]);
 
   let totalCartPrice = cartProducts.reduce(
@@ -101,20 +105,37 @@ function ShoppingCart() {
   let roundedTotalCartPrice = parseFloat(totalCartPrice.toFixed(2));
   let isCartEmpty = cartProducts.length < 1 ? true : false;
 
+  function handleCheckout() {}
+
   function handleDeleteCartItem(productId) {
-    const updatedArray = cartProducts.filter(
-      (product) => product.id !== productId
+    const productToDelete = cartProducts.find(
+      (product) => product.id === productId
     );
-    setCartProducts(updatedArray);
+    if (productToDelete) {
+      const updatedArray = cartProducts.filter(
+        (product) => product.id !== productId
+      );
+      sessionStorage.setItem('cart', JSON.stringify(updatedArray));
+      setCartProducts(updatedArray);
+    } else {
+      console.error(`Product with id ${productId} not found.`);
+    }
   }
+
   function updateProductQuantity(productId, newQuantity) {
-    setCartProducts((prevProducts) =>
-      prevProducts.map((product) =>
-        product.id === productId
-          ? { ...product, quantity: newQuantity }
-          : product
-      )
+    // Check if theres product to update
+    const productToUpdate = cartProducts.find(
+      (product) => product.id === productId
     );
+    if (productToUpdate) {
+      setCartProducts((prevProducts) =>
+        prevProducts.map((product) =>
+          product.id === productId
+            ? { ...product, quantity: newQuantity }
+            : product
+        )
+      );
+    }
   }
   if (isCartEmpty) {
     return (
@@ -144,16 +165,19 @@ function ShoppingCart() {
         <div>
           <p role="totalCartPrice">Total: {roundedTotalCartPrice}</p>
         </div>
+        <div>
+          <Button
+            role={'checkout'}
+            label={'Checkout'}
+            handleClick={handleCheckout}
+          />
+        </div>
       </div>
     );
   }
 }
 
-ShoppingCart.propTypes = {
-  products: PropTypes.array.isRequired,
-};
+ShoppingCart.propTypes = {};
 
-ShoppingCart.defaultProps = {
-  products: [],
-};
+ShoppingCart.defaultProps = {};
 export default ShoppingCart;
