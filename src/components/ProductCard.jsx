@@ -3,7 +3,6 @@ import { useState } from 'react';
 import Button from './Button';
 import DisplayProductInformation from './DisplayProductInformation';
 function ProductCard({ image, price, title, description, rating, category }) {
-  // const [quantity, setQuantity] = useState(0);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   // TODO implement addToCart

@@ -1,3 +1,14 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`Cart component > Renders Cart component correctly 1`] = `<div />`;
+exports[`Cart component > Renders Cart component correctly 1`] = `
+<div>
+  <div>
+    Loading...
+  </div>
+  <p
+    role="emptyCartInfo"
+  >
+    Your cart is empty. Start shopping to add items!
+  </p>
+</div>
+`;

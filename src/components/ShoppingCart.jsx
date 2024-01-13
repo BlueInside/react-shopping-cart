@@ -1,5 +1,5 @@
 import PropTypes from 'prop-types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Button from './Button';
 import ConfirmationModal from './ConfirmationModal';
 
@@ -84,31 +84,53 @@ CartItem.propTypes = {
 };
 
 CartItem.defaultProps = {};
-function ShoppingCart({ products }) {
-  const [cartProducts, setCartProducts] = useState(products);
 
-  let totalCartPrice = cartProducts.reduce(
-    (sum, obj) => sum + obj.price * obj.quantity,
-    0
-  );
-  let roundedTotalCartPrice = parseFloat(totalCartPrice.toFixed(2));
-  let isCartEmpty = cartProducts.length < 1 ? true : false;
+function ShoppingCart({
+  // products,
+  cartItems,
+  removeFromCart,
+  updateProductQuantity,
+}) {
+  // const [products, setCartProducts] = useState(products);
+  const [localCartItems, setLocalCartItems] = useState([]);
+  useEffect(() => {
+    setLocalCartItems([...cartItems]);
+  }, [cartItems]);
 
-  function handleDeleteCartItem(productId) {
-    const updatedArray = cartProducts.filter(
-      (product) => product.id !== productId
-    );
-    setCartProducts(updatedArray);
-  }
-  function updateProductQuantity(productId, newQuantity) {
-    setCartProducts((prevProducts) =>
-      prevProducts.map((product) =>
-        product.id === productId
-          ? { ...product, quantity: newQuantity }
-          : product
+  function handleQuantityChange(productId, newQuantity) {
+    updateProductQuantity(productId, newQuantity);
+    setLocalCartItems((prevItems) =>
+      prevItems.map((item) =>
+        item.id === productId ? { ...item, quantity: newQuantity } : item
       )
     );
   }
+
+  let totalCartPrice = cartItems.reduce(
+    (sum, obj) => sum + obj.price * obj.quantity,
+    0
+  );
+
+  let roundedTotalCartPrice = parseFloat(totalCartPrice.toFixed(2));
+  let isCartEmpty = cartItems.length < 1 ? true : false;
+
+  // function handleDeleteCartItem(productId) {
+  //   const updatedArray = cartItems.filter(
+  //     (product) => product.id !== productId
+  //   );
+  //   setCartProducts(updatedArray);
+  // }
+
+  // function updateProductQuantity(productId, newQuantity) {
+  //   setCartProducts((prevProducts) =>
+  //     prevProducts.map((product) =>
+  //       product.id === productId
+  //         ? { ...product, quantity: newQuantity }
+  //         : product
+  //     )
+  //   );
+  // }
+
   if (isCartEmpty) {
     return (
       <p role="emptyCartInfo">
@@ -119,7 +141,7 @@ function ShoppingCart({ products }) {
     return (
       <div>
         <div>
-          {cartProducts.map((product) => (
+          {localCartItems.map((product) => (
             <CartItem
               key={product.id}
               title={product.title}
@@ -127,9 +149,9 @@ function ShoppingCart({ products }) {
               quantity={product.quantity}
               image={product.image}
               setQuantity={(newQuantity) =>
-                updateProductQuantity(product.id, newQuantity)
+                handleQuantityChange(product.id, newQuantity)
               }
-              handleDeleteCartItem={() => handleDeleteCartItem(product.id)}
+              handleDeleteCartItem={() => removeFromCart(product.id)}
             />
           ))}
         </div>
@@ -143,10 +165,12 @@ function ShoppingCart({ products }) {
 }
 
 ShoppingCart.propTypes = {
-  products: PropTypes.array.isRequired,
+  cartItems: PropTypes.array.isRequired,
+  removeFromCart: PropTypes.func.isRequired,
+  updateProductQuantity: PropTypes.func.isRequired,
 };
 
 ShoppingCart.defaultProps = {
-  products: [],
+  cartItems: [],
 };
 export default ShoppingCart;
