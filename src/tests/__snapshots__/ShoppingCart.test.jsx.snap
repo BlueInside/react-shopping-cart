@@ -154,6 +154,13 @@ exports[`ShoppingCart component > renders ShoppingCart properly 1`] = `
         479.89
       </p>
     </div>
+    <div>
+      <button
+        role="checkout"
+      >
+        Checkout
+      </button>
+    </div>
   </div>
 </div>
 `;
