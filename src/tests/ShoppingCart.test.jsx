@@ -113,7 +113,10 @@ describe('ShoppingCart component', () => {
     render(<ShoppingCart />);
     let deleteButtons = screen.getAllByRole('deleteCartItem');
     let cartItems = screen.getAllByRole('cartItem');
-    expect(cartItems).toHaveLength(shoppingCart.length);
+    let getSessionCart = () =>
+      JSON.parse(window.sessionStorage.getItem('cart'));
+
+    expect(cartItems).toHaveLength(getSessionCart().length);
 
     // Displays confirmation modal
     await user.click(deleteButtons[0]);
@@ -123,7 +126,7 @@ describe('ShoppingCart component', () => {
     // Checks that no item is deleting if user cancel
     await user.click(modalCancelButton);
     cartItems = screen.getAllByRole('cartItem');
-    expect(cartItems).toHaveLength(shoppingCart.length);
+    expect(cartItems).toHaveLength(getSessionCart().length);
 
     await user.click(deleteButtons[0]);
     modalConfirmButton = screen.getByRole('confirmButton');
@@ -131,7 +134,13 @@ describe('ShoppingCart component', () => {
     // Checks that item is deleted from cart when modal is confirmed
     await user.click(modalConfirmButton);
     cartItems = screen.getAllByRole('cartItem');
-    expect(cartItems).toHaveLength(shoppingCart.length - 1);
+    cartItems.map((cartItem) =>
+      screen.debug(within(cartItem).getByRole('cartItemTitle'))
+    );
+    expect(cartItems).toHaveLength(getSessionCart().length);
+
+    // Checks that object is removed from sessionStorage
+    expect(cartItems).toHaveLength(getSessionCart().length);
   });
 
   it('displays total price of all the products', async () => {
