@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 function Navbar({ links }) {
   return (
@@ -6,9 +7,9 @@ function Navbar({ links }) {
       <nav>
         <ol>
           {Array.isArray(links) &&
-            links.map((link) => (
-              <li key={link.id}>
-                <a href={link.path}>{link.label}</a>
+            links.map((link, index) => (
+              <li key={index}>
+                <Link to={link.path}>{link.label}</Link>
               </li>
             ))}
         </ol>
@@ -20,7 +21,6 @@ function Navbar({ links }) {
 Navbar.propTypes = {
   links: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
       label: PropTypes.string.isRequired,
       path: PropTypes.string.isRequired,
     })
