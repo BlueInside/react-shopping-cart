@@ -7,7 +7,7 @@ import { useState } from 'react';
 function ShopPage() {
   const [sortOption, setSortOption] = useState('default');
 
-  let { data, loading, error } = useDataFetching(9, sortOption);
+  let { data, loading, error } = useDataFetching();
 
   function sortData(option) {
     const sortedData = [...data];
