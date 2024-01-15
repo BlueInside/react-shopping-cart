@@ -61,7 +61,7 @@ function DisplayProductInformation({
               <Button handleClick={handleReduce} label={'-'} role={'reduce'} />
             </div>
             <Button
-              handleClick={handleAddToCart}
+              handleClick={() => handleAddToCart(quantity)}
               role={'addToCart'}
               label={'Add to cart'}
             />
@@ -90,4 +90,7 @@ DisplayProductInformation.propTypes = {
   }).isRequired,
   handleAddToCart: PropTypes.func.isRequired,
 };
+
+DisplayProductInformation.defaultProps = {};
+
 export default DisplayProductInformation;
