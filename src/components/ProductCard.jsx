@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { useState } from 'react';
 import Button from './Button';
 import DisplayProductInformation from './DisplayProductInformation';
+import { addToCard } from '../utils/cart';
 function ProductCard({
   product,
   image,
@@ -13,40 +14,9 @@ function ProductCard({
 }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  function handleAddToCart(qty = 1) {
-    // Create shallow copy of product object
-    const newProduct = { ...product, quantity: qty };
-
-    // Gets cart Array from session storage
-    const sessionStorageCart = JSON.parse(sessionStorage.getItem('cart'));
-    if (sessionStorageCart) {
-      // Checks if item already is in cart
-      const existingProduct = sessionStorageCart.find(
-        (p) => p.id === newProduct.id
-      );
-      if (existingProduct) {
-        // If item is in array just increase its quantity by one
-        existingProduct.quantity += qty;
-      } else {
-        // Otherwise add item to cart Array
-        sessionStorageCart.push(newProduct);
-      }
-
-      // If theres cart save in session storage update cart
-      sessionStorage.setItem('cart', JSON.stringify(sessionStorageCart));
-    } else {
-      // Create new cart array in session storage
-      sessionStorage.setItem('cart', JSON.stringify([newProduct]));
-    }
-  }
-
   function showProductModal() {
     if (!isModalOpen) setIsModalOpen(true);
   }
-
-  // function closeProductModal() {
-  //   if (isModalOpen) setIsModalOpen(false);
-  // }
 
   if (isModalOpen) {
     return (
@@ -57,7 +27,7 @@ function ProductCard({
         title={title}
         category={category}
         rating={rating}
-        handleAddToCart={(qty) => handleAddToCart(qty)}
+        handleAddToCart={(product, qty) => addToCard(product, qty)}
       />
     );
   }
@@ -76,7 +46,7 @@ function ProductCard({
       <p role="productPrice">{price}</p>
       <Button
         role={'addToCart'}
-        handleClick={() => handleAddToCart(1)}
+        handleClick={() => addToCard(product, 1)}
         label={'addToCart'}
       />
     </div>
