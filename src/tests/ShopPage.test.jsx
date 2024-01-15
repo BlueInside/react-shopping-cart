@@ -184,8 +184,6 @@ describe('ShopPage component', () => {
       expect(sortedProductTitles).toEqual(productsSortedAZ);
 
       // Logs elements order
-      console.log('AZ: ', sortedProductTitles, productsSortedAZ);
-      screen.debug(screen.getAllByRole('productTitle'));
     });
 
     // Sorts products title A-Z
@@ -206,10 +204,6 @@ describe('ShopPage component', () => {
         (card) => within(card).getByRole('productTitle').textContent
       );
       expect(sortedProductTitles).toEqual(productsSortedHighLow);
-
-      // Logs elements order ZA
-      console.log('ZA: ', productsSortedHighLow);
-      screen.debug(screen.getAllByRole('productTitle'));
     });
   });
 
@@ -244,10 +238,6 @@ describe('ShopPage component', () => {
         (card) => within(card).getByRole('productTitle').textContent
       );
       expect(sortedProductTitles).toEqual(productsSortedZA);
-
-      // Logs elements order
-      console.log('ZA: ', productsSortedZA);
-      screen.debug(screen.getAllByRole('productTitle'));
     });
   });
 
@@ -282,10 +272,6 @@ describe('ShopPage component', () => {
         (card) => within(card).getByRole('productPrice').textContent
       );
       expect(sortedProductTitles).toEqual(productsSortedZA);
-
-      // Logs elements order
-      console.log('LowHigh: ', productsSortedZA);
-      screen.debug(screen.getAllByRole('productPrice'));
     });
   });
 
@@ -320,10 +306,6 @@ describe('ShopPage component', () => {
         (card) => within(card).getByRole('productPrice').textContent
       );
       expect(sortedProductTitles).toEqual(productsSortedHighLow);
-
-      // Logs elements order
-      console.log('HighLow: ', productsSortedHighLow);
-      screen.debug(screen.getAllByRole('productPrice'));
     });
   });
 });
