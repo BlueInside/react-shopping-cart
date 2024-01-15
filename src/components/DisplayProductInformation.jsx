@@ -1,16 +1,12 @@
-import PropTypes from 'prop-types';
 import { useState } from 'react';
 import Button from './Button';
-function DisplayProductInformation({
-  title,
-  price,
-  image,
-  description,
-  category,
-  rating,
-  handleAddToCart,
-}) {
+import useDataFetching from '../hooks/useDataFetching';
+import { useParams } from 'react-router-dom';
+import { addToCard } from '../utils/cart';
+function DisplayProductInformation() {
+  const { productId } = useParams();
   const [quantity, setQuantity] = useState(1);
+  const { data, loading, error } = useDataFetching(productId);
 
   function handleOnQuantityChange(e) {
     const numericValue = Number(e.target.value.replace(/[^0-9]/g, ''));
@@ -36,6 +32,12 @@ function DisplayProductInformation({
       setQuantity((q) => q - 1);
     } else return;
   }
+  if (loading || !data) return <div>Loading</div>;
+  if (error) {
+    return <div>Oops! Something went wrong. Please try again later.</div>;
+  }
+  const { title, image, rating, price, category, description } = data;
+  console.log(data);
 
   return (
     <div role="productModal">
@@ -61,7 +63,7 @@ function DisplayProductInformation({
               <Button handleClick={handleReduce} label={'-'} role={'reduce'} />
             </div>
             <Button
-              handleClick={() => handleAddToCart(quantity)}
+              handleClick={() => addToCard(quantity)}
               role={'addToCart'}
               label={'Add to cart'}
             />
@@ -78,18 +80,18 @@ function DisplayProductInformation({
   );
 }
 
-DisplayProductInformation.propTypes = {
-  title: PropTypes.string.isRequired,
-  price: PropTypes.number.isRequired,
-  image: PropTypes.string.isRequired,
-  description: PropTypes.string,
-  category: PropTypes.string.isRequired,
-  rating: PropTypes.shape({
-    rate: PropTypes.number.isRequired,
-    count: PropTypes.number,
-  }).isRequired,
-  handleAddToCart: PropTypes.func.isRequired,
-};
+// DisplayProductInformation.propTypes = {
+//   title: PropTypes.string.isRequired,
+//   price: PropTypes.number.isRequired,
+//   image: PropTypes.string.isRequired,
+//   description: PropTypes.string,
+//   category: PropTypes.string.isRequired,
+//   rating: PropTypes.shape({
+//     rate: PropTypes.number.isRequired,
+//     count: PropTypes.number,
+//   }).isRequired,
+//   handleAddToCart: PropTypes.func.isRequired,
+// };
 
 DisplayProductInformation.defaultProps = {};
 
