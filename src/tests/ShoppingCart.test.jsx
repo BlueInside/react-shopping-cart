@@ -134,10 +134,6 @@ describe('ShoppingCart component', () => {
     // Checks that item is deleted from cart when modal is confirmed
     await user.click(modalConfirmButton);
     cartItems = screen.getAllByRole('cartItem');
-    cartItems.map((cartItem) =>
-      screen.debug(within(cartItem).getByRole('cartItemTitle'))
-    );
-    expect(cartItems).toHaveLength(getSessionCart().length);
 
     // Checks that object is removed from sessionStorage
     expect(cartItems).toHaveLength(getSessionCart().length);
