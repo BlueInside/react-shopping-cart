@@ -1,10 +1,11 @@
 import { useEffect, useState } from 'react';
 
-function useDataFetching() {
+function useDataFetching(id) {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
-  const url = `https://fakestoreapi.com/products`;
+  let url = `https://fakestoreapi.com/products/`;
+  if (id) url = `https://fakestoreapi.com/products/${id}`;
 
   useEffect(() => {
     fetch(url, {
