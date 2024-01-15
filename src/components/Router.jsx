@@ -3,6 +3,7 @@ import App from '../App';
 import MainPage from './MainPage';
 import ShopPage from './ShopPage';
 import ShoppingCart from './ShoppingCart';
+import DisplayProductInformation from './DisplayProductInformation';
 
 function Router() {
   const router = createBrowserRouter([
@@ -16,6 +17,7 @@ function Router() {
         { path: 'cart', element: <ShoppingCart /> },
       ],
     },
+    { path: 'products/:productId', element: <DisplayProductInformation /> },
   ]);
 
   return <RouterProvider router={router} />;
