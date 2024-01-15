@@ -39,6 +39,7 @@ function ShopPage() {
       <div>
         {sortData(sortOption).map((product) => (
           <ProductCard
+            product={{ ...product }}
             key={product.id}
             image={product.image}
             price={product.price}
