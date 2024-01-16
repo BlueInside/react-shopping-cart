@@ -47,7 +47,7 @@ function CartItem({
       <div role="cartItem">
         <img src={image} alt="product" role="cartItemImage" />
         <p role="cartItemTitle">{title}</p>
-        <p role="cartItemPrice">${price * quantity}`</p>
+        <p role="cartItemPrice">${(price * quantity).toFixed(2)}</p>
         <div role="quantityControlsContainer">
           <Button role={'addQuantity'} label={'+'} handleClick={handleAddQty} />
           <p role="cartItemQuantity">{quantity}</p>
