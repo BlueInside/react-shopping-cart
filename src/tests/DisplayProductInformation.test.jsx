@@ -40,7 +40,7 @@ describe('DisplayProductInformation component', () => {
     window.sessionStorage.clear();
   });
 
-  it('renders DisplayProductInformation component correctly', () => {
+  it('renders DisplayProductInformation component correctly', async () => {
     const { container } = render(<DisplayProductInformation />);
     expect(container).toMatchSnapshot();
   });
