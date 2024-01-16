@@ -2,6 +2,15 @@ import { render, screen, waitFor, within } from '@testing-library/react';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import ShopPage from '../components/ShopPage';
 import userEvent from '@testing-library/user-event';
+import { MemoryRouter } from 'react-router-dom';
+import { RouterProvider } from 'react-router-dom';
+
+const renderWithRouter = (ui, { route = '/' } = {}) => {
+  window.history.pushState({}, 'Test page', route);
+
+  return render(ui, { wrapper: MemoryRouter });
+};
+
 let fetchedData;
 beforeEach(() => {
   fetchedData = [
@@ -117,7 +126,7 @@ describe('ShopPage component', () => {
   it('displays 9 ProductCard items', async () => {
     mockFetchSuccessfully();
 
-    render(<ShopPage />);
+    renderWithRouter(<ShopPage />);
 
     const productCards = await screen.findAllByRole('productCard');
     expect(productCards).toHaveLength(fetchedData.length);
@@ -126,7 +135,7 @@ describe('ShopPage component', () => {
   it('displays loading during fetch', async () => {
     globalThis.fetch = vi.fn(() => new Promise(() => {}));
 
-    render(<ShopPage />);
+    renderWithRouter(<ShopPage />);
 
     await waitFor(() => {
       const loadingText = screen.getByText('Loading...');
@@ -141,7 +150,7 @@ describe('ShopPage component', () => {
       );
     });
 
-    render(<ShopPage />);
+    renderWithRouter(<ShopPage />);
 
     await waitFor(() => {
       const errorText = screen.queryByText(
@@ -155,7 +164,7 @@ describe('ShopPage component', () => {
     mockFetchSuccessfully();
 
     const user = userEvent.setup();
-    render(<ShopPage />);
+    renderWithRouter(<ShopPage />);
 
     // Products cards in default order
     const unsortedProductCards = await screen.findAllByRole('productCard');
@@ -211,7 +220,7 @@ describe('ShopPage component', () => {
     mockFetchSuccessfully();
 
     const user = userEvent.setup();
-    render(<ShopPage />);
+    renderWithRouter(<ShopPage />);
 
     // Products cards in default order
     const unsortedProductCards = await screen.findAllByRole('productCard');
@@ -245,7 +254,7 @@ describe('ShopPage component', () => {
     mockFetchSuccessfully();
 
     const user = userEvent.setup();
-    render(<ShopPage />);
+    renderWithRouter(<ShopPage />);
 
     // Products cards in default order
     const unsortedProductCards = await screen.findAllByRole('productCard');
@@ -279,7 +288,7 @@ describe('ShopPage component', () => {
     mockFetchSuccessfully();
 
     const user = userEvent.setup();
-    render(<ShopPage />);
+    renderWithRouter(<ShopPage />);
 
     // Products cards in default order
     const unsortedProductCards = await screen.findAllByRole('productCard');
