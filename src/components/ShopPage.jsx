@@ -3,6 +3,7 @@ import ProductCard from './ProductCard';
 import FilterDropdown from './FilterDropdown';
 
 import { useState } from 'react';
+import { Outlet } from 'react-router-dom';
 
 function ShopPage() {
   const [sortOption, setSortOption] = useState('default');
@@ -34,7 +35,8 @@ function ShopPage() {
     return <div>Oops! Something went wrong. Please try again later.</div>;
   }
   return (
-    <>
+    <div>
+      <Outlet />
       <FilterDropdown setSortOption={setSortOption} />
       <div>
         {sortData(sortOption).map((product) => (
@@ -50,7 +52,7 @@ function ShopPage() {
           />
         ))}
       </div>
-    </>
+    </div>
   );
 }
 
