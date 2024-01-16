@@ -13,11 +13,19 @@ function Router() {
       children: [
         { index: true, element: <MainPage /> },
         { path: 'main', element: <MainPage /> },
-        { path: 'shop', element: <ShopPage /> },
+        {
+          path: 'shop',
+          element: <ShopPage />,
+          children: [
+            {
+              path: 'products/:productId',
+              element: <DisplayProductInformation />,
+            },
+          ],
+        },
         { path: 'cart', element: <ShoppingCart /> },
       ],
     },
-    { path: 'products/:productId', element: <DisplayProductInformation /> },
   ]);
 
   return <RouterProvider router={router} />;
