@@ -5,6 +5,36 @@ exports[`ProductCard component > renders ProductCard correctly 1`] = `
   "asFragment": [Function],
   "baseElement": <body>
     <div>
+      <div>
+        <div
+          role="productCard"
+        >
+          <img
+            alt="item"
+            role="productImage"
+            src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
+          />
+          <p
+            role="productTitle"
+          >
+            Women's Classic Trench Coat
+          </p>
+          <p
+            role="productPrice"
+          >
+            89.99
+          </p>
+          <button
+            role="addToCart"
+          >
+            addToCart
+          </button>
+        </div>
+      </div>
+    </div>
+  </body>,
+  "container": <div>
+    <div>
       <div
         role="productCard"
       >
@@ -29,32 +59,6 @@ exports[`ProductCard component > renders ProductCard correctly 1`] = `
           addToCart
         </button>
       </div>
-    </div>
-  </body>,
-  "container": <div>
-    <div
-      role="productCard"
-    >
-      <img
-        alt="item"
-        role="productImage"
-        src="https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"
-      />
-      <p
-        role="productTitle"
-      >
-        Women's Classic Trench Coat
-      </p>
-      <p
-        role="productPrice"
-      >
-        89.99
-      </p>
-      <button
-        role="addToCart"
-      >
-        addToCart
-      </button>
     </div>
   </div>,
   "debug": [Function],
