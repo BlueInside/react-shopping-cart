@@ -23,7 +23,6 @@ exports[`ShoppingCart component > renders ShoppingCart properly 1`] = `
           >
             $
             179.98
-            \`
           </p>
           <div
             role="quantityControlsContainer"
@@ -70,7 +69,6 @@ exports[`ShoppingCart component > renders ShoppingCart properly 1`] = `
           >
             $
             139.96
-            \`
           </p>
           <div
             role="quantityControlsContainer"
@@ -117,7 +115,6 @@ exports[`ShoppingCart component > renders ShoppingCart properly 1`] = `
           >
             $
             159.95
-            \`
           </p>
           <div
             role="quantityControlsContainer"
