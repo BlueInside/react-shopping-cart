@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-function useDataFetching(id) {
+function useDataFetching(id = undefined) {
   const [data, setData] = useState(null);
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
