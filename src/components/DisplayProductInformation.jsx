@@ -63,7 +63,7 @@ function DisplayProductInformation() {
               <Button handleClick={handleReduce} label={'-'} role={'reduce'} />
             </div>
             <Button
-              handleClick={() => addToCard(quantity)}
+              handleClick={() => addToCard({ ...data }, quantity)}
               role={'addToCart'}
               label={'Add to cart'}
             />
@@ -79,19 +79,6 @@ function DisplayProductInformation() {
     </div>
   );
 }
-
-// DisplayProductInformation.propTypes = {
-//   title: PropTypes.string.isRequired,
-//   price: PropTypes.number.isRequired,
-//   image: PropTypes.string.isRequired,
-//   description: PropTypes.string,
-//   category: PropTypes.string.isRequired,
-//   rating: PropTypes.shape({
-//     rate: PropTypes.number.isRequired,
-//     count: PropTypes.number,
-//   }).isRequired,
-//   handleAddToCart: PropTypes.func.isRequired,
-// };
 
 DisplayProductInformation.defaultProps = {};
 
