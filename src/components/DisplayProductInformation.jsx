@@ -40,7 +40,7 @@ function DisplayProductInformation() {
   console.log(data);
 
   return (
-    <div role="productModal">
+    <div role="productContainer">
       <div>
         <img src={image} alt="product" role="productImage" />
         <div>
