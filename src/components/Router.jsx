@@ -4,7 +4,6 @@ import MainPage from './MainPage';
 import ShopPage from './ShopPage';
 import ShoppingCart from './ShoppingCart';
 import DisplayProductInformation from './DisplayProductInformation';
-
 function Router() {
   const router = createBrowserRouter([
     {
