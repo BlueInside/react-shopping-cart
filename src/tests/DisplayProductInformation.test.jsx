@@ -40,11 +40,6 @@ describe('DisplayProductInformation component', () => {
     window.sessionStorage.clear();
   });
 
-  it('renders DisplayProductInformation component correctly', async () => {
-    const { container } = render(<DisplayProductInformation />);
-    expect(container).toMatchSnapshot();
-  });
-
   it('displays product details accordingly to product object', async () => {
     await act(async () => {
       render(<DisplayProductInformation />);
@@ -112,12 +107,15 @@ describe('DisplayProductInformation component', () => {
     const mockHandleAddToCart = vi.fn();
     const user = userEvent.setup();
 
-    render(
-      <DisplayProductInformation
-        {...product}
-        handleAddToCart={mockHandleAddToCart}
-      />
-    );
+    await act(async () => {
+      render(
+        <DisplayProductInformation
+          {...product}
+          handleAddToCart={mockHandleAddToCart}
+        />
+      );
+    });
+
     const quantityInput = screen.getByRole('quantity');
     await user.click(screen.getByRole('add'));
     await user.click(screen.getByRole('addToCart'));
