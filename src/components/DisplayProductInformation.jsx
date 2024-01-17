@@ -9,6 +9,7 @@ function DisplayProductInformation() {
   const [quantity, setQuantity] = useState(1);
   const { data, loading, error } = useDataFetching(productId);
   const [flashMessage, setFlashMessage] = useState('');
+
   function handleOnQuantityChange(e) {
     const numericValue = Number(e.target.value.replace(/[^0-9]/g, ''));
     if (e.target.value === '') {
@@ -37,7 +38,7 @@ function DisplayProductInformation() {
   if (error) {
     return <div>Oops! Something went wrong. Please try again later.</div>;
   }
-  const { title, image, rating, price, category, description } = data;
+  const { title, image, rating, price, description } = data;
 
   return (
     <div role="productContainer">
@@ -46,8 +47,18 @@ function DisplayProductInformation() {
         <img src={image} alt="product" role="productImage" />
         <div>
           <div>
-            <p role="title">{title}</p>
-            {rating && <p role="rating">{rating.rate}</p>}
+            <div>
+              <p>Product: </p>
+              <p role="title">{title}</p>
+            </div>
+
+            {rating && (
+              <div>
+                <p>Rating: </p>
+                <p role="rating">{rating.rate} / 5</p>
+              </div>
+            )}
+
             <p role="price">${(price * quantity).toFixed(2)}</p>
           </div>
 
@@ -79,7 +90,7 @@ function DisplayProductInformation() {
       </div>
       <div>
         <div>
-          <p role="category">{category}</p>
+          <p>Description:</p>
           <p role="productDescription">{description}</p>
         </div>
       </div>
