@@ -7,7 +7,7 @@ describe('Navbar', () => {
   const testLinks = [
     { label: 'Home', path: '/' },
     { label: 'Products', path: 'products' },
-    { label: 'About Us', path: 'about' },
+    { label: 'Cart', path: 'about' },
   ];
 
   it('renders navbar correctly', () => {
