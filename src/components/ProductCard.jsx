@@ -2,11 +2,17 @@ import PropTypes from 'prop-types';
 import Button from './Button';
 import { addToCard } from '../utils/cart';
 import { useNavigate } from 'react-router-dom';
+import { useState } from 'react';
 function ProductCard({ product, image, price, title }) {
+  const [productAddedToCart, setProductAddedToCart] = useState(false);
+
   const navigate = useNavigate();
 
   return (
     <div>
+      {productAddedToCart && (
+        <p role="addToCartFlashMessage">Item added to cart</p>
+      )}
       <div role="productCard">
         <img
           onClick={() => navigate(`/shop/products/${product.id}`)}
@@ -23,7 +29,13 @@ function ProductCard({ product, image, price, title }) {
         <p role="productPrice">{price}</p>
         <Button
           role={'addToCart'}
-          handleClick={() => addToCard(product, 1)}
+          handleClick={() => {
+            addToCard(product, 1);
+            setProductAddedToCart(true);
+            setTimeout(() => {
+              setProductAddedToCart(false);
+            }, 1000);
+          }}
           label={'addToCart'}
         />
       </div>
