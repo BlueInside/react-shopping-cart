@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-function Navbar({ links }) {
+function Navbar({ links, itemsCount }) {
   return (
     <>
       <nav>
@@ -9,7 +9,12 @@ function Navbar({ links }) {
           {Array.isArray(links) &&
             links.map((link, index) => (
               <li key={index}>
-                <Link to={link.path}>{link.label}</Link>
+                <div>
+                  <Link to={link.path}>{link.label}</Link>
+                  {link.label === 'Cart' && (
+                    <span role="navCartItems">{itemsCount}</span>
+                  )}
+                </div>
               </li>
             ))}
         </ol>
@@ -25,6 +30,7 @@ Navbar.propTypes = {
       path: PropTypes.string.isRequired,
     })
   ),
+  itemsCount: PropTypes.number,
 };
 
 Navbar.defaultProps = {
