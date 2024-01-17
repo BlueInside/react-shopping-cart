@@ -47,7 +47,7 @@ function DisplayProductInformation() {
           <div>
             <p role="title">{title}</p>
             {rating && <p role="rating">{rating.rate}</p>}
-            <p role="price">{price}</p>
+            <p role="price">${(price * quantity).toFixed(2)}</p>
           </div>
 
           <div>
