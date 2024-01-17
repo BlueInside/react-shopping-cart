@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import Button from './Button';
 import ConfirmationModal from './ConfirmationModal';
-
+import FlashMessage from './FlashMessage';
 function CartItem({
   image,
   title,
@@ -12,7 +12,6 @@ function CartItem({
   handleDeleteCartItem,
 }) {
   const [isConfirmationModalOpen, setConfirmationModalOpen] = useState(false);
-
   function displayConfirmationModal() {
     if (!isConfirmationModalOpen) {
       setConfirmationModalOpen(true);
@@ -86,7 +85,7 @@ CartItem.propTypes = {
 CartItem.defaultProps = {};
 function ShoppingCart() {
   const [cartProducts, setCartProducts] = useState([]);
-  const [thankYouMessage, setThankYouMessage] = useState('');
+  const [checkoutCompleted, setCheckoutCompleted] = useState(false);
   let storedCartItems = sessionStorage.getItem('cart');
 
   useEffect(() => {
@@ -109,10 +108,7 @@ function ShoppingCart() {
   function handleCheckout() {
     setCartProducts([]);
     sessionStorage.clear();
-    setThankYouMessage('Thank you for yours purchase.');
-    setTimeout(() => {
-      setThankYouMessage('');
-    }, 2000);
+    setCheckoutCompleted(true);
   }
 
   function handleDeleteCartItem(productId) {
@@ -148,7 +144,9 @@ function ShoppingCart() {
   if (isCartEmpty) {
     return (
       <>
-        {thankYouMessage && <p>{thankYouMessage}</p>}
+        {checkoutCompleted && (
+          <FlashMessage text={'Thank you for purchase!'} timer={2000} />
+        )}
         <p role="emptyCartInfo">
           Your cart is empty. Start shopping to add items!
         </p>
