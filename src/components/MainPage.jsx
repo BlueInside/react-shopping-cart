@@ -4,6 +4,7 @@ import useDataFetching from '../hooks/useDataFetching';
 
 function MainPage() {
   const navigate = useNavigate();
+
   const { data, error, loading } = useDataFetching();
 
   if (loading || !data) return <p role="loader">Loading...</p>;
