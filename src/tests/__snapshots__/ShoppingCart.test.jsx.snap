@@ -28,9 +28,9 @@ exports[`ShoppingCart component > renders ShoppingCart properly 1`] = `
             role="quantityControlsContainer"
           >
             <button
-              role="addQuantity"
+              role="reduceQuantity"
             >
-              +
+              -
             </button>
             <p
               role="cartItemQuantity"
@@ -38,9 +38,9 @@ exports[`ShoppingCart component > renders ShoppingCart properly 1`] = `
               2
             </p>
             <button
-              role="reduceQuantity"
+              role="addQuantity"
             >
-              -
+              +
             </button>
           </div>
           <button
@@ -74,9 +74,9 @@ exports[`ShoppingCart component > renders ShoppingCart properly 1`] = `
             role="quantityControlsContainer"
           >
             <button
-              role="addQuantity"
+              role="reduceQuantity"
             >
-              +
+              -
             </button>
             <p
               role="cartItemQuantity"
@@ -84,9 +84,9 @@ exports[`ShoppingCart component > renders ShoppingCart properly 1`] = `
               4
             </p>
             <button
-              role="reduceQuantity"
+              role="addQuantity"
             >
-              -
+              +
             </button>
           </div>
           <button
@@ -120,9 +120,9 @@ exports[`ShoppingCart component > renders ShoppingCart properly 1`] = `
             role="quantityControlsContainer"
           >
             <button
-              role="addQuantity"
+              role="reduceQuantity"
             >
-              +
+              -
             </button>
             <p
               role="cartItemQuantity"
@@ -130,9 +130,9 @@ exports[`ShoppingCart component > renders ShoppingCart properly 1`] = `
               1
             </p>
             <button
-              role="reduceQuantity"
+              role="addQuantity"
             >
-              -
+              +
             </button>
           </div>
           <button

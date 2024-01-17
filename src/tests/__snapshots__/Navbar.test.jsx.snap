@@ -4,25 +4,31 @@ exports[`Navbar > renders navbar correctly 1`] = `
 <nav>
   <ol>
     <li>
-      <a
-        href="/"
-      >
-        Home
-      </a>
+      <div>
+        <a
+          href="/"
+        >
+          Home
+        </a>
+      </div>
     </li>
     <li>
-      <a
-        href="/products"
-      >
-        Products
-      </a>
+      <div>
+        <a
+          href="/products"
+        >
+          Products
+        </a>
+      </div>
     </li>
     <li>
-      <a
-        href="/about"
-      >
-        About Us
-      </a>
+      <div>
+        <a
+          href="/about"
+        >
+          Cart
+        </a>
+      </div>
     </li>
   </ol>
 </nav>
