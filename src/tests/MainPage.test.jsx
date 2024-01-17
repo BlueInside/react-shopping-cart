@@ -12,6 +12,7 @@ describe('MainPage', () => {
 
   it('renders MainPage component correctly', () => {
     const { container } = renderWithRouter(<MainPage />);
+
     expect(container).toMatchSnapshot();
   });
 
