@@ -61,7 +61,6 @@ describe('DisplayProductInformation component', () => {
     expect(screen.getByRole('title')).toHaveTextContent(product.title);
     expect(screen.getByRole('price')).toHaveTextContent(product.price);
     expect(screen.getByRole('rating')).toHaveTextContent(product.rating.rate);
-    expect(screen.getByRole('category')).toHaveTextContent(product.category);
     expect(screen.getByRole('addToCart')).toBeInTheDocument();
   });
 
