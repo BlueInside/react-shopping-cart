@@ -3,11 +3,12 @@ import Button from './Button';
 import useDataFetching from '../hooks/useDataFetching';
 import { useParams } from 'react-router-dom';
 import { addToCard } from '../utils/cart';
+
 function DisplayProductInformation() {
   const { productId } = useParams();
   const [quantity, setQuantity] = useState(1);
   const { data, loading, error } = useDataFetching(productId);
-
+  const [flashMessage, setFlashMessage] = useState('');
   function handleOnQuantityChange(e) {
     const numericValue = Number(e.target.value.replace(/[^0-9]/g, ''));
     if (e.target.value === '') {
@@ -37,10 +38,10 @@ function DisplayProductInformation() {
     return <div>Oops! Something went wrong. Please try again later.</div>;
   }
   const { title, image, rating, price, category, description } = data;
-  console.log(data);
 
   return (
     <div role="productContainer">
+      <div>{flashMessage && <p>{flashMessage}</p>}</div>
       <div>
         <img src={image} alt="product" role="productImage" />
         <div>
@@ -52,7 +53,7 @@ function DisplayProductInformation() {
 
           <div>
             <div className="quantityControllers">
-              <Button handleClick={handleIncrement} label={'+'} role="add" />
+              <Button handleClick={handleReduce} label={'-'} role={'reduce'} />
               <input
                 role="quantity"
                 type="number"
@@ -60,10 +61,16 @@ function DisplayProductInformation() {
                 value={quantity}
                 onChange={handleOnQuantityChange}
               />
-              <Button handleClick={handleReduce} label={'-'} role={'reduce'} />
+              <Button handleClick={handleIncrement} label={'+'} role="add" />
             </div>
             <Button
-              handleClick={() => addToCard({ ...data }, quantity)}
+              handleClick={() => {
+                addToCard({ ...data }, quantity);
+                setFlashMessage('Product added to cart!');
+                setTimeout(() => {
+                  setFlashMessage('');
+                }, 1500);
+              }}
               role={'addToCart'}
               label={'Add to cart'}
             />
