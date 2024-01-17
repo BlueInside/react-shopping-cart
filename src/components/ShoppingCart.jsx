@@ -86,6 +86,7 @@ CartItem.propTypes = {
 CartItem.defaultProps = {};
 function ShoppingCart() {
   const [cartProducts, setCartProducts] = useState([]);
+  const [thankYouMessage, setThankYouMessage] = useState('');
   let storedCartItems = sessionStorage.getItem('cart');
 
   useEffect(() => {
@@ -105,7 +106,14 @@ function ShoppingCart() {
   let roundedTotalCartPrice = parseFloat(totalCartPrice.toFixed(2));
   let isCartEmpty = cartProducts.length < 1 ? true : false;
 
-  function handleCheckout() {}
+  function handleCheckout() {
+    setCartProducts([]);
+    sessionStorage.clear();
+    setThankYouMessage('Thank you for yours purchase.');
+    setTimeout(() => {
+      setThankYouMessage('');
+    }, 2000);
+  }
 
   function handleDeleteCartItem(productId) {
     const productToDelete = cartProducts.find(
@@ -139,9 +147,12 @@ function ShoppingCart() {
   }
   if (isCartEmpty) {
     return (
-      <p role="emptyCartInfo">
-        Your cart is empty. Start shopping to add items!
-      </p>
+      <>
+        {thankYouMessage && <p>{thankYouMessage}</p>}
+        <p role="emptyCartInfo">
+          Your cart is empty. Start shopping to add items!
+        </p>
+      </>
     );
   } else {
     return (
