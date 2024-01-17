@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-function Navbar({ links, itemsCount }) {
+function Navbar({ links }) {
   return (
     <>
       <nav>
@@ -11,9 +11,6 @@ function Navbar({ links, itemsCount }) {
               <li key={index}>
                 <div>
                   <Link to={link.path}>{link.label}</Link>
-                  {link.label === 'Cart' && (
-                    <span role="navCartItems">{itemsCount}</span>
-                  )}
                 </div>
               </li>
             ))}
