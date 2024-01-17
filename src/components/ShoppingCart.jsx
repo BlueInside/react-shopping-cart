@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Button from './Button';
 import ConfirmationModal from './ConfirmationModal';
 import FlashMessage from './FlashMessage';
+
 function CartItem({
   image,
   title,
@@ -48,13 +49,13 @@ function CartItem({
         <p role="cartItemTitle">{title}</p>
         <p role="cartItemPrice">${(price * quantity).toFixed(2)}</p>
         <div role="quantityControlsContainer">
-          <Button role={'addQuantity'} label={'+'} handleClick={handleAddQty} />
-          <p role="cartItemQuantity">{quantity}</p>
           <Button
             role={'reduceQuantity'}
             label={'-'}
             handleClick={handleRemoveQty}
           />
+          <p role="cartItemQuantity">{quantity}</p>
+          <Button role={'addQuantity'} label={'+'} handleClick={handleAddQty} />
         </div>
         <Button
           label={'Delete Icon'}
