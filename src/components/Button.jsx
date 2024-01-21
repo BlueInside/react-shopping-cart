@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
-
+import StyledButton from './styles/Button.styled';
 function Button({ label, handleClick, role }) {
   return (
-    <button onClick={handleClick} role={role}>
+    <StyledButton onClick={handleClick} role={role}>
       {label}
-    </button>
+    </StyledButton>
   );
 }
 
