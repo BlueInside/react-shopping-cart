@@ -7,6 +7,7 @@ exports[`FilterDropdown component > Renders FilterDropdown correctly 1`] = `
   >
     <div>
       <button
+        class="sc-beySPh bhpoEk"
         role="filter"
       >
         Sort by...

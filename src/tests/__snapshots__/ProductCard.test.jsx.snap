@@ -25,6 +25,7 @@ exports[`ProductCard component > renders ProductCard correctly 1`] = `
             89.99
           </p>
           <button
+            class="sc-beySPh bhpoEk"
             role="addToCart"
           >
             addToCart
@@ -54,6 +55,7 @@ exports[`ProductCard component > renders ProductCard correctly 1`] = `
           89.99
         </p>
         <button
+          class="sc-beySPh bhpoEk"
           role="addToCart"
         >
           addToCart
