@@ -1,21 +1,19 @@
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-
+import { StyledNavbar } from './styles/Navbar.styled';
 function Navbar({ links }) {
   return (
     <>
-      <nav>
+      <StyledNavbar>
         <ol>
           {Array.isArray(links) &&
             links.map((link, index) => (
               <li key={index}>
-                <div>
-                  <Link to={link.path}>{link.label}</Link>
-                </div>
+                <Link to={link.path}>{link.label}</Link>
               </li>
             ))}
         </ol>
-      </nav>
+      </StyledNavbar>
     </>
   );
 }
