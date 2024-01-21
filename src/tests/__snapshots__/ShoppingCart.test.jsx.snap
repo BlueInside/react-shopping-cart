@@ -28,6 +28,7 @@ exports[`ShoppingCart component > renders ShoppingCart properly 1`] = `
             role="quantityControlsContainer"
           >
             <button
+              class="sc-beySPh bhpoEk"
               role="reduceQuantity"
             >
               -
@@ -38,12 +39,14 @@ exports[`ShoppingCart component > renders ShoppingCart properly 1`] = `
               2
             </p>
             <button
+              class="sc-beySPh bhpoEk"
               role="addQuantity"
             >
               +
             </button>
           </div>
           <button
+            class="sc-beySPh bhpoEk"
             role="deleteCartItem"
           >
             Delete Icon
@@ -74,6 +77,7 @@ exports[`ShoppingCart component > renders ShoppingCart properly 1`] = `
             role="quantityControlsContainer"
           >
             <button
+              class="sc-beySPh bhpoEk"
               role="reduceQuantity"
             >
               -
@@ -84,12 +88,14 @@ exports[`ShoppingCart component > renders ShoppingCart properly 1`] = `
               4
             </p>
             <button
+              class="sc-beySPh bhpoEk"
               role="addQuantity"
             >
               +
             </button>
           </div>
           <button
+            class="sc-beySPh bhpoEk"
             role="deleteCartItem"
           >
             Delete Icon
@@ -120,6 +126,7 @@ exports[`ShoppingCart component > renders ShoppingCart properly 1`] = `
             role="quantityControlsContainer"
           >
             <button
+              class="sc-beySPh bhpoEk"
               role="reduceQuantity"
             >
               -
@@ -130,12 +137,14 @@ exports[`ShoppingCart component > renders ShoppingCart properly 1`] = `
               1
             </p>
             <button
+              class="sc-beySPh bhpoEk"
               role="addQuantity"
             >
               +
             </button>
           </div>
           <button
+            class="sc-beySPh bhpoEk"
             role="deleteCartItem"
           >
             Delete Icon
@@ -153,6 +162,7 @@ exports[`ShoppingCart component > renders ShoppingCart properly 1`] = `
     </div>
     <div>
       <button
+        class="sc-beySPh bhpoEk"
         role="checkout"
       >
         Checkout
