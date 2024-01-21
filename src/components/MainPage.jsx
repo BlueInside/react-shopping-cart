@@ -3,13 +3,14 @@ import Button from '../components/Button';
 import useDataFetching from '../hooks/useDataFetching';
 import Carousel from './Carousel';
 import { StyledMain } from './styles/Main.styled';
+import LoadingSpinner from './styles/LoadingSpinner.styled';
 
 function MainPage() {
   const navigate = useNavigate();
 
   const { data, error, loading } = useDataFetching();
 
-  if (loading || !data) return <p role="loader">Loading...</p>;
+  if (loading || !data) return <LoadingSpinner />;
   if (error) return <p role="error">Error</p>;
   return (
     <StyledMain>
