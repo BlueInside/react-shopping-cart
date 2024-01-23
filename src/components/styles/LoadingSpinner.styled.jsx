@@ -16,7 +16,7 @@ const LoadingSpinner = styled.div`
   margin-right: auto;
   left: 0px;
   right: 0px;
-  top: 50%;
+  top: 40vh;
   text-align: center;
   position: absolute;
   border: 8px solid ${({ theme }) => theme.colors.secondaryDarkGrey};

@@ -2,6 +2,7 @@ import styled from 'styled-components';
 
 const StyledNavbar = styled.nav`
   background-color: ${(props) => props.theme.colors.primaryBlue};
+
   ol {
     list-style: none;
     display: flex;
