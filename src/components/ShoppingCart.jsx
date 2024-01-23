@@ -1,3 +1,13 @@
+import {
+  StyledCartItem,
+  Quantity,
+  Title,
+  Price,
+  Remove,
+  Checkout,
+  EmptyCartMessage,
+  SadIcon,
+} from './styles/ShoppingCart.styled';
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import Button from './Button';
@@ -43,12 +53,12 @@ function CartItem({
   }
 
   return (
-    <div>
-      <div role="cartItem">
+    <>
+      <StyledCartItem role="cartItem">
         <img src={image} alt="product" role="cartItemImage" />
-        <p role="cartItemTitle">{title}</p>
-        <p role="cartItemPrice">${(price * quantity).toFixed(2)}</p>
-        <div role="quantityControlsContainer">
+        <Title role="cartItemTitle">{title}</Title>
+        <Price role="cartItemPrice">${(price * quantity).toFixed(2)}</Price>
+        <Quantity role="quantityControlsContainer">
           <Button
             role={'reduceQuantity'}
             label={'-'}
@@ -56,13 +66,12 @@ function CartItem({
           />
           <p role="cartItemQuantity">{quantity}</p>
           <Button role={'addQuantity'} label={'+'} handleClick={handleAddQty} />
-        </div>
-        <Button
-          label={'Delete Icon'}
-          role={'deleteCartItem'}
-          handleClick={displayConfirmationModal}
-        />
-      </div>
+        </Quantity>
+        <Button role={'deleteCartItem'} handleClick={displayConfirmationModal}>
+          <Remove />
+        </Button>
+      </StyledCartItem>
+
       {isConfirmationModalOpen && (
         <ConfirmationModal
           message="Are you sure you want to delete this item?"
@@ -70,7 +79,7 @@ function CartItem({
           onCancel={onCancel}
         />
       )}
-    </div>
+    </>
   );
 }
 
@@ -148,41 +157,41 @@ function ShoppingCart() {
         {checkoutCompleted && (
           <FlashMessage text={'Thank you for purchase!'} timer={2000} />
         )}
-        <p role="emptyCartInfo">
-          Your cart is empty. Start shopping to add items!
-        </p>
+        <EmptyCartMessage>
+          <p role="emptyCartInfo">
+            Your cart is empty. Start shopping to add items!
+          </p>
+          <SadIcon />
+        </EmptyCartMessage>
       </>
     );
   } else {
     return (
-      <div>
-        <div>
-          {cartProducts.map((product) => (
-            <CartItem
-              key={product.id}
-              title={product.title}
-              price={product.price}
-              quantity={product.quantity}
-              image={product.image}
-              setQuantity={(newQuantity) =>
-                updateProductQuantity(product.id, newQuantity)
-              }
-              handleDeleteCartItem={() => handleDeleteCartItem(product.id)}
-            />
-          ))}
-        </div>
+      <>
+        {cartProducts.map((product) => (
+          <CartItem
+            key={product.id}
+            title={product.title}
+            price={product.price}
+            quantity={product.quantity}
+            image={product.image}
+            setQuantity={(newQuantity) =>
+              updateProductQuantity(product.id, newQuantity)
+            }
+            handleDeleteCartItem={() => handleDeleteCartItem(product.id)}
+          />
+        ))}
 
-        <div>
+        <Checkout>
           <p role="totalCartPrice">Total: {roundedTotalCartPrice}</p>
-        </div>
-        <div>
+
           <Button
             role={'checkout'}
             label={'Checkout'}
             handleClick={handleCheckout}
           />
-        </div>
-      </div>
+        </Checkout>
+      </>
     );
   }
 }

@@ -1,7 +1,15 @@
 import PropTypes from 'prop-types';
 import StyledButton from './styles/Button.styled';
 
-function Button({ label, handleClick, role, bg, hoverColor, border = false }) {
+function Button({
+  label,
+  handleClick,
+  role,
+  bg,
+  hoverColor,
+  border = false,
+  children,
+}) {
   return (
     <StyledButton
       $hoverColor={hoverColor}
@@ -10,7 +18,7 @@ function Button({ label, handleClick, role, bg, hoverColor, border = false }) {
       role={role}
       $border={border}
     >
-      {label}{' '}
+      {label} {children}
     </StyledButton>
   );
 }
@@ -22,10 +30,11 @@ Button.propTypes = {
   border: PropTypes.bool,
   bg: PropTypes.string,
   hoverColor: PropTypes.string,
+  children: PropTypes.node,
 };
 
 Button.defaultProps = {
-  label: 'button',
+  label: '',
   handleClick: () => console.log('No handleClick prop Provided'),
 };
 

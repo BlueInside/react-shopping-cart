@@ -6,7 +6,7 @@ const StyledCarousel = styled.div`
   height: 70vh;
 
   img {
-    max-width: 100%;
+    max-width: 65%;
     height: 70vh;
     position: absolute;
     margin-left: auto;

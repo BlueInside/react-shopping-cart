@@ -1,26 +1,28 @@
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
 import StyledFlashMessage from './styles/FlashMessage.styled';
-function FlashMessage({ text, timer }) {
-  const [message, setMessage] = useState(text);
+function FlashMessage({ text }) {
+  const [display, setDisplay] = useState(true);
+  const timer = 1000;
 
   useEffect(() => {
     let id;
     id = setTimeout(() => {
-      setMessage('');
+      setDisplay(false);
     }, timer);
     return () => clearTimeout(id);
-  }, [timer]);
+  }, []);
   return (
     <div>
-      <StyledFlashMessage role="flashMessage">{message}</StyledFlashMessage>
+      <StyledFlashMessage open={display} role="flashMessage">
+        {text}
+      </StyledFlashMessage>
     </div>
   );
 }
 
 FlashMessage.defaultProps = {
   text: '',
-  timer: 40000000, // default to 3 seconds
 };
 
 FlashMessage.propTypes = {

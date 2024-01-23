@@ -1,19 +1,37 @@
+import { StyledConfirmationModal } from './styles/Confirmation.styled';
 import Button from './Button';
 import PropTypes from 'prop-types';
+import { useEffect, useRef } from 'react';
 
 function ConfirmationModal({ message, onConfirm, onCancel }) {
+  const ref = useRef();
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        onCancel(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [onCancel]);
   return (
-    <div role="confirmationModal">
+    <StyledConfirmationModal ref={ref} role="confirmationModal">
       <p role="modalMessage">{message}</p>
       <div role="confirmationButtons">
+        <Button handleClick={onCancel} label={'Cancel'} role={'cancelButton'} />
+
         <Button
           handleClick={onConfirm}
           label={'Confirm'}
           role={'confirmButton'}
         />
-        <Button handleClick={onCancel} label={'Cancel'} role={'cancelButton'} />
       </div>
-    </div>
+    </StyledConfirmationModal>
   );
 }
 

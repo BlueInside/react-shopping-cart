@@ -14,8 +14,8 @@ function MainPage() {
   if (error) return <p role="error">Error</p>;
   return (
     <StyledMain>
-      <h1>Trend Tribe: Join the Fashion Revolution</h1>
-      {data && <Carousel images={data.slice(0, 3)} />}
+      <h1>Diverse Delights</h1>
+      {data && <Carousel images={data.slice(0, 10)} />}
       <Button handleClick={() => navigate('/shop')} label={'Discover more'} />
     </StyledMain>
   );

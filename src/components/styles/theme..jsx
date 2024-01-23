@@ -10,6 +10,7 @@ const theme = {
     black: '#000000',
     errorRed: '#DC3545',
   },
+  mobile: '400px',
 };
 
 export default theme;

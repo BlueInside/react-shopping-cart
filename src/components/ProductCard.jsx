@@ -3,7 +3,7 @@ import {
   ProductImg,
   ProductPara,
 } from './styles/ProductCard.styled';
-
+import FlashMessage from './FlashMessage';
 import theme from './styles/theme.';
 import PropTypes from 'prop-types';
 import Button from './Button';
@@ -12,14 +12,16 @@ import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 function ProductCard({ product, image, price, title }) {
   const [productAddedToCart, setProductAddedToCart] = useState(false);
-
   const navigate = useNavigate();
 
   return (
-    <>
-      {productAddedToCart && (
-        <p role="addToCartFlashMessage">Item added to cart</p>
-      )}
+    <div>
+      {/* prevent content jumping */}
+      <div style={{ height: '1px' }}>
+        {productAddedToCart && (
+          <FlashMessage text={'Added to cart!'} role="addToCartFlashMessage" />
+        )}
+      </div>
       <StyledProductCard role="productCard">
         <div>
           <ProductImg
@@ -50,7 +52,7 @@ function ProductCard({ product, image, price, title }) {
           label={'Add to cart'}
         />
       </StyledProductCard>
-    </>
+    </div>
   );
 }
 

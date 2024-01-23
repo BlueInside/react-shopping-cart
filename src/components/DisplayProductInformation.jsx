@@ -11,12 +11,16 @@ import Button from './Button';
 import useDataFetching from '../hooks/useDataFetching';
 import { useParams } from 'react-router-dom';
 import { addToCard } from '../utils/cart';
+import FlashMessage from './FlashMessage';
 
 function DisplayProductInformation() {
   const { productId } = useParams();
   const [quantity, setQuantity] = useState(1);
   const { data, loading, error } = useDataFetching(productId);
-  const [flashMessage, setFlashMessage] = useState('');
+  const [displayFlashMessage, setDisplayFlashMessage] = useState(false);
+
+  // Scrolls up to the top of the page
+  window.scrollTo(0, 0);
 
   function handleOnQuantityChange(e) {
     const numericValue = Number(e.target.value.replace(/[^0-9]/g, ''));
@@ -50,7 +54,11 @@ function DisplayProductInformation() {
 
   return (
     <StyledProductInfoContainer role="productContainer">
-      <div>{flashMessage && <p>{flashMessage}</p>}</div>
+      <div>
+        {displayFlashMessage && (
+          <FlashMessage text={'Item added to your cart'} />
+        )}
+      </div>
 
       <ImageAndControllers>
         <img src={image} alt="product" role="productImage" />
@@ -83,10 +91,10 @@ function DisplayProductInformation() {
             bg={'#FFC107'}
             handleClick={() => {
               addToCard({ ...data }, quantity);
-              setFlashMessage('Product added to cart!');
+              setDisplayFlashMessage(true);
               setTimeout(() => {
-                setFlashMessage('');
-              }, 1500);
+                setDisplayFlashMessage(false);
+              }, 1000);
             }}
             role={'addToCart'}
             label={'Add to cart'}
