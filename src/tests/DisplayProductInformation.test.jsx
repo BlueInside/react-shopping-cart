@@ -4,10 +4,16 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { addToCard } from '../utils/cart';
 import { act } from 'react-dom/test-utils';
+import { ThemeProvider } from 'styled-components';
+import theme from '../components/styles/theme.';
+
 describe('DisplayProductInformation component', () => {
   let product;
   let getCartSessionStorage;
   let handleAddToCart;
+
+  const customRender = (ui, options) =>
+    render(<ThemeProvider theme={theme}>{ui}</ThemeProvider>, options);
 
   beforeEach(() => {
     handleAddToCart = addToCard;
@@ -42,7 +48,7 @@ describe('DisplayProductInformation component', () => {
 
   it('displays product details accordingly to product object', async () => {
     await act(async () => {
-      render(<DisplayProductInformation />);
+      customRender(<DisplayProductInformation />);
     });
 
     expect(screen.getByRole('productImage')).toHaveAttribute(
@@ -63,7 +69,7 @@ describe('DisplayProductInformation component', () => {
     const user = userEvent.setup();
 
     await act(async () => {
-      render(
+      customRender(
         <DisplayProductInformation {...product} handleAddToCart={addToCard} />
       );
     });
