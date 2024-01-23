@@ -1,9 +1,16 @@
 import PropTypes from 'prop-types';
 import StyledButton from './styles/Button.styled';
-function Button({ label, handleClick, role }) {
+
+function Button({ label, handleClick, role, bg, hoverColor, border = false }) {
   return (
-    <StyledButton onClick={handleClick} role={role}>
-      {label}
+    <StyledButton
+      $hoverColor={hoverColor}
+      $bg={bg}
+      onClick={handleClick}
+      role={role}
+      $border={border}
+    >
+      {label}{' '}
     </StyledButton>
   );
 }
@@ -12,6 +19,9 @@ Button.propTypes = {
   label: PropTypes.string,
   handleClick: PropTypes.func.isRequired,
   role: PropTypes.string,
+  border: PropTypes.bool,
+  bg: PropTypes.string,
+  hoverColor: PropTypes.string,
 };
 
 Button.defaultProps = {
