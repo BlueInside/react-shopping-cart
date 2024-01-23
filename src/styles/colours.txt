@@ -1,0 +1,16 @@
+Primary Colors: These are the main colors you'll use throughout your project. They should be bright and eye-catching to draw attention to important elements.
+Bright Blue: #007BFF
+Vibrant Green: #28A745
+Soft Yellow: #FFC107
+
+Secondary Colors: These colors can be used to complement your primary colors or to add variety to your design.
+Light Grey: #F8F9FA
+Dark Grey: #6C757D
+White: #FFFFFF
+
+Neutral Colors: Neutral colors are used for backgrounds, borders, and text. They should be subtle and not distract from the primary colors.
+Off-White: #F5F5F5
+Black: #000000
+
+Error Colors: These colors are used to indicate errors or warnings to the user.
+Red: #DC3545
