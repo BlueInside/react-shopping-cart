@@ -5,14 +5,12 @@ exports[`FilterDropdown component > Renders FilterDropdown correctly 1`] = `
   <div
     role="dropdownContainer"
   >
-    <div>
-      <button
-        class="sc-beySPh bhpoEk"
-        role="filter"
-      >
-        Sort by...
-      </button>
-    </div>
+    <button
+      class="sc-beySPh goVLFM"
+      role="filter"
+    >
+      Sort by...
+    </button>
   </div>
 </div>
 `;

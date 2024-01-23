@@ -3,7 +3,7 @@
 exports[`Button component > renders correctly 1`] = `
 <div>
   <button
-    class="sc-beySPh bhpoEk"
+    class="sc-beySPh goVLFM"
   >
     button
   </button>

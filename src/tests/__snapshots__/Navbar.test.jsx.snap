@@ -1,34 +1,30 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`Navbar > renders navbar correctly 1`] = `
-<nav>
+<nav
+  class="sc-beySPh dJGvpt"
+>
   <ol>
     <li>
-      <div>
-        <a
-          href="/"
-        >
-          Home
-        </a>
-      </div>
+      <a
+        href="/"
+      >
+        Home
+      </a>
     </li>
     <li>
-      <div>
-        <a
-          href="/products"
-        >
-          Products
-        </a>
-      </div>
+      <a
+        href="/products"
+      >
+        Products
+      </a>
     </li>
     <li>
-      <div>
-        <a
-          href="/about"
-        >
-          Cart
-        </a>
-      </div>
+      <a
+        href="/about"
+      >
+        Cart
+      </a>
     </li>
   </ol>
 </nav>

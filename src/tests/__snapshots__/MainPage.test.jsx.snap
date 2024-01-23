@@ -2,10 +2,8 @@
 
 exports[`MainPage > renders MainPage component correctly 1`] = `
 <div>
-  <p
-    role="loader"
-  >
-    Loading...
-  </p>
+  <div
+    class="sc-eDLKkx fufuAY"
+  />
 </div>
 `;
