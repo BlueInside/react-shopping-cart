@@ -1,3 +1,11 @@
+import {
+  StyledProductInfoContainer,
+  ImageAndControllers,
+  PriceQtyContainer,
+  QuantityButtons,
+  RatingAndPrice,
+} from './styles/DisplayProductInformation.styled';
+import HorizontalLine from './styles/HorizontalLine.styled';
 import { useState } from 'react';
 import Button from './Button';
 import useDataFetching from '../hooks/useDataFetching';
@@ -41,60 +49,72 @@ function DisplayProductInformation() {
   const { title, image, rating, price, description } = data;
 
   return (
-    <div role="productContainer">
+    <StyledProductInfoContainer role="productContainer">
       <div>{flashMessage && <p>{flashMessage}</p>}</div>
-      <div>
-        <img src={image} alt="product" role="productImage" />
-        <div>
-          <div>
-            <div>
-              <p>Product: </p>
-              <p role="title">{title}</p>
-            </div>
 
+      <ImageAndControllers>
+        <img src={image} alt="product" role="productImage" />
+
+        <PriceQtyContainer>
+          <RatingAndPrice>
             {rating && (
               <div>
-                <p>Rating: </p>
-                <p role="rating">{rating.rate} / 5</p>
+                <p>Rating:</p> <p role="rating">{rating.rate} / 5</p>
               </div>
             )}
-
-            <p role="price">${(price * quantity).toFixed(2)}</p>
-          </div>
-
-          <div>
-            <div className="quantityControllers">
-              <Button handleClick={handleReduce} label={'-'} role={'reduce'} />
-              <input
-                role="quantity"
-                type="number"
-                min={1}
-                value={quantity}
-                onChange={handleOnQuantityChange}
-              />
-              <Button handleClick={handleIncrement} label={'+'} role="add" />
+            <div>
+              <p>Price: </p>
+              <p role="price"> ${(price * quantity).toFixed(2)}</p>
             </div>
-            <Button
-              handleClick={() => {
-                addToCard({ ...data }, quantity);
-                setFlashMessage('Product added to cart!');
-                setTimeout(() => {
-                  setFlashMessage('');
-                }, 1500);
-              }}
-              role={'addToCart'}
-              label={'Add to cart'}
+          </RatingAndPrice>
+
+          <QuantityButtons>
+            <Button handleClick={handleReduce} label={'-'} role={'reduce'} />
+            <input
+              role="quantity"
+              type="number"
+              min={1}
+              value={quantity}
+              onChange={handleOnQuantityChange}
             />
-          </div>
+            <Button handleClick={handleIncrement} label={'+'} role="add" />
+          </QuantityButtons>
+          <Button
+            bg={'#FFC107'}
+            handleClick={() => {
+              addToCard({ ...data }, quantity);
+              setFlashMessage('Product added to cart!');
+              setTimeout(() => {
+                setFlashMessage('');
+              }, 1500);
+            }}
+            role={'addToCart'}
+            label={'Add to cart'}
+          />
+        </PriceQtyContainer>
+      </ImageAndControllers>
+
+      <div>
+        <div>
+          <p>
+            <b>Product:</b>{' '}
+          </p>
+          <p role="title">{title}</p>
         </div>
       </div>
       <div>
         <div>
-          <p>Description:</p>
+          <p>
+            <b>Description:</b>
+          </p>
           <p role="productDescription">{description}</p>
         </div>
       </div>
-    </div>
+      <HorizontalLine />
+      <div>
+        <p>Other products: </p>
+      </div>
+    </StyledProductInfoContainer>
   );
 }
 
