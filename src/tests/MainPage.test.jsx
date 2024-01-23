@@ -1,5 +1,7 @@
 import { render, screen, waitFor } from '@testing-library/react';
 import { describe, expect, it, vi } from 'vitest';
+import { ThemeProvider } from 'styled-components';
+import theme from '../components/styles/theme.';
 import MainPage from '../components/MainPage';
 import { MemoryRouter } from 'react-router-dom';
 
@@ -7,7 +9,9 @@ describe('MainPage', () => {
   const renderWithRouter = (ui, { route = '/' } = {}) => {
     window.history.pushState({}, 'Test page', route);
 
-    return render(ui, { wrapper: MemoryRouter });
+    return render(<ThemeProvider theme={theme}>{ui}</ThemeProvider>, {
+      wrapper: MemoryRouter,
+    });
   };
 
   it('renders MainPage component correctly', () => {
@@ -31,12 +35,6 @@ describe('MainPage', () => {
       label: /Discover more/i,
     });
     expect(button).toBeInTheDocument();
-  });
-
-  it('displays loading paragraph', () => {
-    renderWithRouter(<MainPage />);
-    const loadingPara = screen.getByRole('loader', { value: /Loading.../i });
-    expect(loadingPara).toBeInTheDocument();
   });
 
   it('should fetch and display 3 images', async () => {

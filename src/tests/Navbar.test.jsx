@@ -1,9 +1,14 @@
 import { render, screen } from '@testing-library/react';
+import { ThemeProvider } from 'styled-components';
+import theme from '../components/styles/theme.';
+
 import { describe, expect, it } from 'vitest';
 import Navbar from '../components/Navbar';
 import { MemoryRouter } from 'react-router-dom';
 
 describe('Navbar', () => {
+  const customRender = (ui, options) =>
+    render(<ThemeProvider theme={theme}>{ui}</ThemeProvider>, options);
   const testLinks = [
     { label: 'Home', path: '/' },
     { label: 'Products', path: 'products' },
@@ -11,7 +16,7 @@ describe('Navbar', () => {
   ];
 
   it('renders navbar correctly', () => {
-    const { container } = render(
+    const { container } = customRender(
       <MemoryRouter>
         <Navbar links={testLinks} />
       </MemoryRouter>
@@ -20,7 +25,7 @@ describe('Navbar', () => {
   });
 
   it('renders navbar with links', () => {
-    render(
+    customRender(
       <MemoryRouter>
         <Navbar links={testLinks} />
       </MemoryRouter>
@@ -33,7 +38,7 @@ describe('Navbar', () => {
   });
 
   it('renders links with correct content and attribute', () => {
-    render(
+    customRender(
       <MemoryRouter>
         <Navbar links={testLinks} />
       </MemoryRouter>
