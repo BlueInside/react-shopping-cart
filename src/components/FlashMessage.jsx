@@ -1,5 +1,6 @@
 import PropTypes from 'prop-types';
 import { useEffect, useState } from 'react';
+import StyledFlashMessage from './styles/FlashMessage.styled';
 function FlashMessage({ text, timer }) {
   const [message, setMessage] = useState(text);
 
@@ -12,14 +13,14 @@ function FlashMessage({ text, timer }) {
   }, [timer]);
   return (
     <div>
-      <p role="flashMessage">{message}</p>
+      <StyledFlashMessage role="flashMessage">{message}</StyledFlashMessage>
     </div>
   );
 }
 
 FlashMessage.defaultProps = {
   text: '',
-  timer: 3000, // default to 3 seconds
+  timer: 40000000, // default to 3 seconds
 };
 
 FlashMessage.propTypes = {

@@ -1,14 +1,18 @@
+import LoadingSpinner from './styles/LoadingSpinner.styled';
+import { ProductsDisplay } from './styles/ShopPage.styled';
+import { StyledFilterDropdown } from './styles/ShopPage.styled';
+import FlashMessage from './FlashMessage';
+
 import useDataFetching from '../hooks/useDataFetching';
 import ProductCard from './ProductCard';
-import FilterDropdown from './FilterDropdown';
-
 import { useState } from 'react';
 import { Outlet } from 'react-router-dom';
 
 function ShopPage() {
   const [sortOption, setSortOption] = useState('default');
 
-  let { data, loading, error } = useDataFetching();
+  // let { data, loading, error } = useDataFetching();
+  const loading = true;
 
   function sortData(option) {
     const sortedData = [...data];
@@ -29,16 +33,16 @@ function ShopPage() {
   }
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <FlashMessage text={'Item added to the cart'} />;
   }
   if (error) {
     return <div>Oops! Something went wrong. Please try again later.</div>;
   }
   return (
-    <div>
+    <>
       <Outlet />
-      <FilterDropdown setSortOption={setSortOption} />
-      <div>
+      <StyledFilterDropdown setSortOption={setSortOption} />
+      <ProductsDisplay>
         {sortData(sortOption).map((product) => (
           <ProductCard
             product={{ ...product }}
@@ -51,8 +55,8 @@ function ShopPage() {
             category={product.category}
           />
         ))}
-      </div>
-    </div>
+      </ProductsDisplay>
+    </>
   );
 }
 
